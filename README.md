@@ -57,29 +57,15 @@ export const metadata: Metadata = {
 
 ```
 
-### Deploy to GitHub page
+### Deploy to Vercel
 
 ```bash
-npm run build
-
-npm run deploy
+vercel deploy
 ```
 
-### Configure GitHub Pages
+Learn how to deploy your Vercel Projects from Vercel CLI. 👇
 
-1. Go to your repository on GitHub.
-
-2. Click on **Settings**.
-
-3. Scroll down to the **GitHub Pages** section.
-
-4. In the Source dropdown, select the `gh-pages` branch as the source.
-
-5. GitHub will generate a URL where your static site is accessible, typically:
-
-```bash
-https://yourusername.github.io/your-repo-name/
-```
+**[vercel cli](https://vercel.com/docs/cli/deploying-from-cli)**
 
 ### License
 
