@@ -47,11 +47,11 @@ const Swap: React.FC<SwapProps> = ({ tokenAddress, signer, addressConnected, add
                     const supply = ethers.formatEther(supplyInWei);
                     const tokenOwnedWei = await tokenBalance(tokenAddress, addressConnected);
                     const tokenOwned = ethers.formatEther(tokenOwnedWei);
-                    const tokenFixedOwn = parseFloat(tokenOwned) * 99 / 100;
+                    const tokenFixedOwn = Number(tokenOwned) * 99 / 100;
                     setTokenName(name);
                     setTokenSymbol(symbol);
                     setTotalSupply(supply);
-                    setTokenBalance(tokenFixedOwn.toString());
+                    setTokenBalance(String(tokenFixedOwn));
 
                     const reserveToken = await tokenReserveAmount(tokenAddress);
                     const reserveETH = await ethReserveAmount(tokenAddress);
@@ -80,10 +80,10 @@ const Swap: React.FC<SwapProps> = ({ tokenAddress, signer, addressConnected, add
 
             try {
                 // Convert amounts to Number for precise calculations
-                const ethAmount = parseFloat(amount);
-                const tokenAmount = parseFloat(amount);
-                const priceInEth = parseFloat(ethPrice);
-                const priceInToken = parseFloat(tokenPrice);
+                const ethAmount = Number(amount);
+                const tokenAmount = Number(amount);
+                const priceInEth = Number(ethPrice);
+                const priceInToken = Number(tokenPrice);
 
                 if (swapType === 'buy') {
                     // Calculate tokens out for the given ETH amount
@@ -92,8 +92,8 @@ const Swap: React.FC<SwapProps> = ({ tokenAddress, signer, addressConnected, add
                     const feeEth = ethAmount * 0.3 / 100; // Aplly fee for development
 
                     // Convert to readable format
-                    setTokenMinAmountOut(tokensMinOut.toString());
-                    setFeeOnEth(feeEth.toString());
+                    setTokenMinAmountOut(String(tokensMinOut));
+                    setFeeOnEth(String(feeEth));
                 } else if (swapType === 'sell') {
                     // Calculate ETH out for the given token amount
                     const ethOut = tokenAmount / priceInToken;
@@ -101,8 +101,8 @@ const Swap: React.FC<SwapProps> = ({ tokenAddress, signer, addressConnected, add
                     const feeToken = tokenAmount * 0.3 / 100 // Apply fee for development
 
                     // Convert to readable format
-                    setETHMinAmountOut(ethMinOut.toString());
-                    setFeeOnToken(feeToken.toString());
+                    setETHMinAmountOut(String(ethMinOut));
+                    setFeeOnToken(String(feeToken));
                 }
             } catch (err) {
                 console.error('Failed to estimate amount out:', err);
@@ -116,20 +116,20 @@ const Swap: React.FC<SwapProps> = ({ tokenAddress, signer, addressConnected, add
         if (!signer || !tokenAddress) return;
 
         const ethAmount = ethers.parseEther(amount);
-        const tokenAmount = ethers.parseUnits(amount, 18);
+        const tokenAmount = ethers.parseEther(amount);
         setLoading(true);
 
         try {
             if (swapType === 'buy') {
                 // Calculate 5% of the total supply
-                const tenPercentOfSupply = parseFloat(totalSupply) * 5 / 100;
+                const tenPercentOfSupply = Number(totalSupply) * 5 / 100;
 
                 // Calculate price in ETH for 5% token supply
-                const maxETHAmount = tenPercentOfSupply / parseFloat(tokenPrice as string);
+                const maxETHAmount = tenPercentOfSupply / Number(tokenPrice as string);
                 const ethMaxBuy = maxETHAmount * 75 / 100;
 
                 // Check if the purchase exceeds 5% of the total supply
-                if (ethAmount > ethers.parseEther(ethMaxBuy.toString())) {
+                if (ethAmount > ethers.parseEther(String(ethMaxBuy))) {
                     setToast({
                         message: `The purchase amount exceeds 5% of the total supply. You can buy up to ${parseFloat(ethMaxBuy.toString()).toFixed(5)} ETH).`,
                         type: 'error',
@@ -138,9 +138,9 @@ const Swap: React.FC<SwapProps> = ({ tokenAddress, signer, addressConnected, add
                     return;
                 }
 
-                await buy(tokenAddress, ethers.parseEther(tokenMinAmountOut as string), ethAmount, signer);
+                await buy(tokenAddress, ethers.parseEther(String(parseFloat(tokenMinAmountOut as string).toFixed(4))), ethAmount, signer);
             } else if (swapType === 'sell') {
-                await sell(tokenAddress, tokenAmount, ethers.parseEther(ethMinAmountOut as string), signer);
+                await sell(tokenAddress, tokenAmount, ethers.parseEther(String(parseFloat(ethMinAmountOut as string).toFixed(4))), signer);
             }
 
             // Show success toast
