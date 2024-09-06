@@ -16,18 +16,18 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Test Token Sepolia | Ticker Swap", // Change with your own token name
-  description: "Test Token Sepolia is more than just a digital asset, it's a story of innovation, community, and trust.", // Change with your own description
+  title: "Ticker Token | Ticker Swap", // Change with your own token name
+  description: "Ticker Token is more than just a digital asset, it's a story of innovation, community, and trust.", // Change with your own description
   openGraph: {
-    title: "Test Token Sepolia | Ticker Swap", // Change with your own token name
-    description: "Test Token Sepolia is more than just a digital asset, it's a story of innovation, community, and trust.", // Change with your own description
+    title: "Ticker Token | Ticker Swap", // Change with your own token name
+    description: "Ticker Token is more than just a digital asset, it's a story of innovation, community, and trust.", // Change with your own description
     url: "https://tickerswap.xyz", // Change with your own domain
     images: [
       {
         url: "https://tickerswap.xyz/og-image.jpg", // Change with your own image (1200px x 630px)
         width: 1200,
         height: 600,
-        alt: "Test Token Sepolia", // Change with your own token name
+        alt: "Ticker Token", // Change with your own token name
       },
     ],
     videos: [{
@@ -41,8 +41,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: "Test Token Sepolia | Ticker Swap", // Change with your own token name
-    description: "Test Token Sepolia is more than just a digital asset, it's a story of innovation, community, and trust.", // Change with your own description
+    title: "Ticker Token | Ticker Swap", // Change with your own token name
+    description: "Ticker Token is more than just a digital asset, it's a story of innovation, community, and trust.", // Change with your own description
     images: ["https://tickerswap.xyz/og-image.jpg"], // Change with your own image (1200px x 630px)
   },
   manifest: "/manifest.json",
