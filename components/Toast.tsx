@@ -14,9 +14,9 @@ const Toast: React.FC<ToastProps> = ({ message, type, onClose }) => {
 
     return (
         <div
-            className={`fixed bottom-4 left-1/2 transform -translate-x-1/2 lg:translate-x-0 lg:left-4 lg:bottom-4 p-4 rounded shadow-lg z-50
+            className={`fixed top-[10%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 p-4 rounded-xl shadow-lg z-50
             ${toastStyles} 
-            w-11/12 lg:w-auto lg:max-w-sm
+            w-11/12 sm:w-[490px] font-mono
             `}
             style={{ transition: 'all 0.3s ease-in-out' }}
         >

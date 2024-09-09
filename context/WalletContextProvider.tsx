@@ -2,6 +2,7 @@
 
 import React, { createContext, useContext, useEffect, useState, ReactNode, useCallback } from 'react';
 import { ethers, Signer } from 'ethers';
+import { yourTokenChainId } from '@/contracts/YourToken';
 
 interface WalletContextProps {
     signer: Signer | null;
@@ -46,7 +47,7 @@ export const WalletProvider: React.FC<WalletProviderProps> = ({ children }) => {
             const provider = new ethers.BrowserProvider(window.ethereum);
             const network = await provider.getNetwork();
 
-            if (network.chainId === BigInt(11155111)) { // Sepolia network chainId
+            if (network.chainId === BigInt(yourTokenChainId)) {
                 const signer = await provider.getSigner();
                 const userAddress = await signer.getAddress();
                 const userBalances = await provider.getBalance(userAddress);

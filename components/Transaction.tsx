@@ -6,6 +6,7 @@ import {
     tokenPriceInETH,
     tokenSymbols
 } from '@/lib/token';
+import { chainCurrencySymbol } from '@/contracts/YourToken';
 
 interface TransactionProps {
     tokenAddress: string;
@@ -111,7 +112,7 @@ const Transaction: React.FC<TransactionProps> = ({ tokenAddress }) => {
                                             <tr className="border-b border-neutral-200" key={index}>
                                                 <td className="whitespace-nowrap px-6 py-4"><a href={event.etherscanTx} target="_blank" className="hover:text-blue-500">{event.eventname}</a></td>
                                                 <td className="whitespace-nowrap px-6 py-4">{event.tokenValue} <span className="text-lime-600 font-semibold">{tokenSymbol}</span></td>
-                                                <td className="whitespace-nowrap px-6 py-4">{event.ethValue} <span className="text-lime-600 font-semibold">ETH</span></td>
+                                                <td className="whitespace-nowrap px-6 py-4">{event.ethValue} <span className="text-lime-600 font-semibold">{chainCurrencySymbol}</span></td>
                                                 <td className="whitespace-nowrap px-6 py-4"><a href={event.etherscanFrom} target="_blank" className="hover:text-blue-500">{event.from}</a></td>
                                                 <td className="whitespace-nowrap px-6 py-4"><a href={event.etherscanTo} target="_blank" className="hover:text-blue-500">{event.to}</a></td>
                                                 <td className="whitespace-nowrap px-6 py-4 text-right">{event.timestamp}</td>

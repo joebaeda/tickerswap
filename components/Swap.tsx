@@ -13,6 +13,7 @@ import {
     tokenBalance
 } from '@/lib/token';
 import Toast from './Toast';
+import { chainCurrencySymbol } from '@/contracts/YourToken';
 
 interface SwapProps {
     tokenAddress: string;
@@ -131,7 +132,7 @@ const Swap: React.FC<SwapProps> = ({ tokenAddress, signer, addressConnected, add
                 // Check if the purchase exceeds 5% of the total supply
                 if (ethAmount > ethers.parseEther(String(ethMaxBuy))) {
                     setToast({
-                        message: `The purchase amount exceeds 5% of the total supply. You can buy up to ${parseFloat(ethMaxBuy.toString()).toFixed(5)} ETH).`,
+                        message: `The purchase amount exceeds 5% of the total supply. You can buy up to ${parseFloat(ethMaxBuy.toString()).toFixed(5)} ${chainCurrencySymbol}.`,
                         type: 'error',
                     });
                     setLoading(false);
@@ -184,7 +185,7 @@ const Swap: React.FC<SwapProps> = ({ tokenAddress, signer, addressConnected, add
             <div className="text-gray-700">
                 <div className="mb-4">
                     <label htmlFor="amount" className="block text-sm font-medium mb-2">
-                        {swapType === 'buy' ? 'ETH Amount' : `${tokenSymbol} Amount`}
+                        {swapType === 'buy' ? `${chainCurrencySymbol} Amount` : `${tokenSymbol} Amount`}
                     </label>
                     <input
                         type="text"
@@ -199,7 +200,7 @@ const Swap: React.FC<SwapProps> = ({ tokenAddress, signer, addressConnected, add
                 </div>
 
                 <div className="mb-5 flex justify-between items-center text-sm">
-                    <span>Price {swapType === 'buy' ? `1 ETH = ${parseFloat(tokenPrice as string).toFixed(0) || '0'} ${tokenSymbol}` : `1 ${tokenSymbol} = ${parseFloat(ethPrice as string).toFixed(7) || '0'} ETH`}</span>
+                    <span>Price {swapType === 'buy' ? `1 ${chainCurrencySymbol} = ${parseFloat(tokenPrice as string).toFixed(0) || '0'} ${tokenSymbol}` : `1 ${tokenSymbol} = ${parseFloat(ethPrice as string).toFixed(7) || '0'} ${chainCurrencySymbol}`}</span>
                     <button
                         onClick={() => setSwapType(swapType === 'buy' ? 'sell' : 'buy')}
                         className="text-blue-500 hover:text-blue-700"
@@ -219,15 +220,15 @@ const Swap: React.FC<SwapProps> = ({ tokenAddress, signer, addressConnected, add
 
                 {swapType === 'buy' ? (
                     <>
-                        <p className="py-2">Your Balance: <span className="float-right">{parseFloat(addressBalances).toFixed(5)} ETH</span></p>
-                        <p className="pb-2">Fee (0.3%): <span className="float-right">{feeOnEth ? parseFloat(feeOnEth).toFixed(5) : '0'} ETH</span></p>
+                        <p className="py-2">Your Balance: <span className="float-right">{parseFloat(addressBalances).toFixed(5)} {chainCurrencySymbol}</span></p>
+                        <p className="pb-2">Fee (0.3%): <span className="float-right">{feeOnEth ? parseFloat(feeOnEth).toFixed(5) : '0'} {chainCurrencySymbol}</span></p>
                         <p>{tokenSymbol} Received (Est): <span className="float-right">{tokenMinAmountOut ? parseFloat(tokenMinAmountOut).toFixed(0) : '0'} {tokenSymbol}</span></p>
                     </>
                 ) : (
                     <>
                         <p className="py-2">Your Balance: <span className="float-right">{parseFloat(tokenBalances).toFixed(0)} {tokenSymbol}</span></p>
                         <p className="pb-2">Fee (0.3%): <span className="float-right">{feeOnToken ? parseFloat(feeOnToken).toFixed(0) : '0'} {tokenSymbol}</span></p>
-                        <p>ETH Received (Est): <span className="float-right">{ethMinAmountOut ? parseFloat(ethMinAmountOut).toFixed(5) : '0'} ETH</span></p>
+                        <p>{chainCurrencySymbol} Received (Est): <span className="float-right">{ethMinAmountOut ? parseFloat(ethMinAmountOut).toFixed(5) : '0'} {chainCurrencySymbol}</span></p>
                     </>
                 )}
             </div>

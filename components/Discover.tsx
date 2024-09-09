@@ -1,3 +1,4 @@
+import { chainCurrencySymbol } from '@/contracts/YourToken';
 import {
     ethReserveAmount,
     tickerContract,
@@ -114,18 +115,18 @@ const Discover: React.FC<DiscoverProps> = ({ tokenAddress }) => {
                 <div className="mb-6">
                     <h2 className="text-xl text-lime-600 font-bold my-4">Discover the {tokenName} &#40;{tokenSymbol}&#41;</h2>
                     <p className="mb-4">
-                        In the vast universe of decentralized finance&#44; a star shines brightly—{tokenName}&#46; Born from the Ethereum blockchain&#44; this ERC-20 token has not only captivated investors but also carved a niche in the ever-evolving landscape of Automated Market Makers &#40;AMMs&#41;.
+                        In the vast universe of decentralized finance&#44; a star shines brightly—{tokenName}&#46; Born from this Chain&#44; this ERC-20 token has not only captivated investors but also carved a niche in the ever-evolving landscape of Automated Market Makers &#40;AMMs&#41;.
                     </p>
 
                     <h3 className="text-lg text-lime-600 font-semibold mb-3">The Journey of {tokenName} &#40;{tokenSymbol}&#41;</h3>
                     <p className="mb-4">
-                        {tokenName} isn&#39;t just another digital asset&#44; it&#39;s a beacon of innovation&#44; With its built-in AMM&#44; {tokenName} seamlessly facilitates the determination of prices between itself and ETH&#44; ensuring fair and transparent trading for all participants&#46;
+                        {tokenName} isn&#39;t just another digital asset&#44; it&#39;s a beacon of innovation&#44; With its built-in AMM&#44; {tokenName} seamlessly facilitates the determination of prices between itself and {chainCurrencySymbol}&#44; ensuring fair and transparent trading for all participants&#46;
                     </p>
-                    <p className="mb-4">As of now&#44; each {tokenName} is valued at {currentPrice} ETH&#46; This price&#44; ever-fluid&#44; reflects the dynamic nature of the market&#44; influenced by the forces of supply&#44; demand&#44; and trading volume&#46;</p>
+                    <p className="mb-4">As of now&#44; each {tokenName} is valued at {currentPrice} {chainCurrencySymbol}&#46; This price&#44; ever-fluid&#44; reflects the dynamic nature of the market&#44; influenced by the forces of supply&#44; demand&#44; and trading volume&#46;</p>
 
-                    <p className="mb-4">The Marketcap or total value of all {tokenName} combined has reached a staggering {marketCap} ETH&#46; This figure isn&#39;t just a number&#44; it represents the collective trust and belief that investors have placed in {tokenName}&#46;</p>
+                    <p className="mb-4">The Marketcap or total value of all {tokenName} combined has reached a staggering {marketCap} {chainCurrencySymbol}&#46; This figure isn&#39;t just a number&#44; it represents the collective trust and belief that investors have placed in {tokenName}&#46;</p>
 
-                    <p className="mb-4">Over the last 24 hours&#44; {volume} ETH worth of {tokenName} has exchanged hands&#46; This volume showcases the token&#39;s liquidity and the vibrancy of its trading community&#46;</p>
+                    <p className="mb-4">Over the last 24 hours&#44; {volume} {chainCurrencySymbol} worth of {tokenName} has exchanged hands&#46; This volume showcases the token&#39;s liquidity and the vibrancy of its trading community&#46;</p>
 
                     <h3 className="text-lg text-lime-600 font-semibold mb-3">A Glimpse at the Supply</h3>
                     <p className="mb-4">
@@ -137,7 +138,7 @@ const Discover: React.FC<DiscoverProps> = ({ tokenAddress }) => {
                     <p className="mb-4">Over {holders} unique addresses hold {tokenName} &#40;{tokenSymbol}&#41;&#44; each contributing to the token&#39;s decentralized ownership&#46; This diverse community is the lifeblood of {tokenName}&#44; driving its adoption and use across various platforms&#46;</p>
 
                     <h3 className="text-lg text-lime-600 font-semibold mb-3">The Lifeblood: Reserves</h3>
-                    <p className="mb-4">The contract holds {ethReserve} ETH in reserve&#44; a safety net ensuring liquidity and trust in the system&#46; Alongside ETH&#44; the contract also holds {tokenReserve} {tokenSymbol} in reserve&#44; bolstering the token&#39;s ability to meet market demands&#46;</p>
+                    <p className="mb-4">The contract holds {ethReserve} {chainCurrencySymbol} in reserve&#44; a safety net ensuring liquidity and trust in the system&#46; Alongside {chainCurrencySymbol}&#44; the contract also holds {tokenReserve} {tokenSymbol} in reserve&#44; bolstering the token&#39;s ability to meet market demands&#46;</p>
 
                     <h3 className="text-lg text-lime-600 font-semibold mb-3">Conclusion</h3>
                     <p className="mb-4">

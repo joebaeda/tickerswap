@@ -1,7 +1,8 @@
 "use client";
 
 import React from 'react';
-import { useWallet } from '@/context/WalletContextProvider'; // Assuming you have a WalletProvider context
+import { useWallet } from '@/context/WalletContextProvider';
+import { yourTokenChainHex } from '@/contracts/YourToken';
 
 const WrongNetwork: React.FC = () => {
     const { isCorrectNetwork } = useWallet();
@@ -10,7 +11,7 @@ const WrongNetwork: React.FC = () => {
         try {
             await window.ethereum.request({
                 method: 'wallet_switchEthereumChain',
-                params: [{ chainId: '0xaa36a7' }], // Sepolia network chainId
+                params: [{ chainId: yourTokenChainHex }],
             });
             window.location.reload(); // Refresh the page after switching network
         } catch (error) {
