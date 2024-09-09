@@ -116,7 +116,7 @@ const Swap: React.FC<SwapProps> = ({ tokenAddress, signer, addressConnected, add
         if (!signer || !tokenAddress) return;
 
         const ethAmount = ethers.parseEther(amount);
-        const tokenAmount = ethers.parseEther(amount);
+        const tokenAmount = ethers.parseUnits(amount, 18);
         setLoading(true);
 
         try {
@@ -138,7 +138,7 @@ const Swap: React.FC<SwapProps> = ({ tokenAddress, signer, addressConnected, add
                     return;
                 }
 
-                await buy(tokenAddress, ethers.parseEther(String(parseFloat(tokenMinAmountOut as string).toFixed(4))), ethAmount, signer);
+                await buy(tokenAddress, ethers.parseUnits(tokenMinAmountOut as string, 18), ethAmount, signer);
             } else if (swapType === 'sell') {
                 await sell(tokenAddress, tokenAmount, ethers.parseEther(String(parseFloat(ethMinAmountOut as string).toFixed(4))), signer);
             }

@@ -1,1 +1,1 @@
-export const yourToken = "0x4b18F45F5d019cF61cb9f001e8FEEa63cac22Ee0"; // Change with your own token contract address
+export const yourToken = "0x4b18F45F5d019cF61cb9f001e8FEEa63cac22Ee0";
