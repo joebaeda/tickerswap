@@ -6,7 +6,7 @@ import {
     tokenPriceInETH,
     tokenSymbols
 } from '@/lib/token';
-import { chainCurrencySymbol } from '@/contracts/YourToken';
+import { chainBlockExplorer, chainCurrencySymbol } from '@/contracts/YourToken';
 
 interface TransactionProps {
     tokenAddress: string;
@@ -41,9 +41,9 @@ const Transaction: React.FC<TransactionProps> = ({ tokenAddress }) => {
                     if (!tx) return null; // Handle null tx case
                     const decodedData = contract.interface.parseTransaction({ data: tx.data });
                     return {
-                        etherscanTx: 'https://sepolia.etherscan.io/tx/' + event.transactionHash,
-                        etherscanFrom: 'https://sepolia.etherscan.io/address/' + String(event.args.from).toLowerCase(),
-                        etherscanTo: 'https://sepolia.etherscan.io/address/' + String(event.args.to).toLowerCase(),
+                        etherscanTx: `${chainBlockExplorer}/tx/${event.transactionHash}`,
+                        etherscanFrom: `${chainBlockExplorer}/address/${String(event.args.from).toLowerCase()}`,
+                        etherscanTo: `${chainBlockExplorer}/address/${String(event.args.to).toLowerCase()}`,
                         eventname: decodedData?.name === "swapEthForTokens" ? "Buy" : decodedData?.name === "swapTokensForEth" ? "Sell" : "Transfer",
                         from: event.args.from.slice(0, 8), // Slice the from address
                         to: event.args.to.slice(0, 8), // Slice the to address

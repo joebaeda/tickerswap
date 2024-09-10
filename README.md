@@ -26,18 +26,19 @@ export const yourToken = "0x4b18F45F5d019cF61cb9f001e8FEEa63cac22Ee0"; // Replac
 export const yourTokenChainId = 11155111; // Replace with the chainId (number) where your Token is deployed.
 export const yourTokenChainHex = "0xaa36a7"; // Replace with the chainId (hex) where your Token is deployed.
 export const chainCurrencySymbol = "ETH" // Replace with Currency Symbol of Network where your Token is deployed.
+export const chainBlockExplorer = "https://sepolia.etherscan.io"; // Replace with Block Explorer of Network where your Token is deployed.
 ```
 
 Below is a list of networks and chainIds that support the Ticker Swap project:
 
-|Network Name|ChainId (Number)|ChainId (Hex)|Currency Symbol|
-|------------|----------------|-------------|---------------|
-|Mainnet     |1               |0x1          |ETH            |
-|Base Mainnet|8453            |0x2105       |ETH            |
-|BNB Mainnet |56              |0x38         |BNB            |
-|Sepolia     |11155111        |0xaa36a7     |ETH            |
-|Base Testnet|84532           |0x14a34      |ETH            |
-|BNB Testnet |97              |0x61         |BNB            |
+|Network Name|ChainId (Number)|ChainId (Hex)|Currency Symbol|Block Explorer URL           |
+|------------|----------------|-------------|---------------|-----------------------------|
+|Mainnet     |1               |0x1          |ETH            |https://etherscan.io         |
+|Base Mainnet|8453            |0x2105       |ETH            |https://basescan.org         |
+|BNB Mainnet |56              |0x38         |BNB            |https://bscscan.com          |
+|Sepolia     |11155111        |0xaa36a7     |ETH            |https://sepolia.etherscan.io |
+|Base Testnet|84532           |0x14a34      |ETH            |https://sepolia.basescan.org |
+|BNB Testnet |97              |0x61         |BNB            |https://testnet.bscscan.com  |
 
 
 ### SEO Metadata
