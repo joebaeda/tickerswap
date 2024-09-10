@@ -1,6 +1,6 @@
 {
-  "name": "tickerswap",
-  "short_name": "tickerswap",
+  "name": "Ticker Swap",
+  "short_name": "Ticker Swap",
   "theme_color": "#020617",
   "background_color": "#f3f4f6",
   "display": "standalone",
