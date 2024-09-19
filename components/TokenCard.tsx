@@ -1,5 +1,3 @@
-"use client";
-
 import useContractData from "@/hook/useContractData";
 import Image from "next/image";
 import Swap from "./Swap";

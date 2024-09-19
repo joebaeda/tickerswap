@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
 import {
@@ -12,7 +10,7 @@ import {
     ethPriceInToken,
     tokenBalance,
     creatorFee
-} from '@/lib/Token';
+} from '@/lib/token';
 import Toast from './Toast';
 
 interface SwapProps {
