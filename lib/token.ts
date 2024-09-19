@@ -1,11 +1,11 @@
 import { ethers } from 'ethers';
-import { TickerToken } from '@/contracts/TickerToken';
+import { tokenABI } from '@/lib/TokenABI';
 
 export const tickerContract = (tokenAddress?: string, signer?: ethers.Signer) => {
   const provider = new ethers.BrowserProvider(window.ethereum);
   const contract = new ethers.Contract(
     tokenAddress as string,
-    TickerToken,
+    tokenABI,
     signer || provider
   );
   return contract;
@@ -44,6 +44,18 @@ export const tokenSymbols = async (tokenAddress: string) => {
     return tokenSymbol;
 };
 
+export const tokenDesc = async (tokenAddress: string) => {
+    const contract = tickerContract(tokenAddress);
+    const tDesc = await contract.tokenDescription();
+    return tDesc;
+};
+
+export const tokenLogo = async (tokenAddress: string) => {
+    const contract = tickerContract(tokenAddress);
+    const tLogo = await contract.tokenImageUrl();
+    return tLogo;
+};
+
 export const tokenPriceInETH = async (tokenAddress: string) => {
     const contract = tickerContract(tokenAddress);
     const priceInETH = await contract.getTokenPrice();
@@ -56,18 +68,6 @@ export const ethPriceInToken = async (tokenAddress: string) => {
     return priceInToken;
 };
 
-export const ethReserveAmount = async (tokenAddress: string) => {
-    const contract = tickerContract(tokenAddress);
-    const etherReserve = await contract.ethReserve();
-    return etherReserve;
-};
-
-export const tokenReserveAmount = async (tokenAddress: string) => {
-    const contract = tickerContract(tokenAddress);
-    const tokensReserve = await contract.tokenReserve();
-    return tokensReserve;
-};
-
 export const totalTokenSupply = async (tokenAddress: string) => {
     const contract = tickerContract(tokenAddress);
     const supply = await contract.totalSupply();
@@ -78,6 +78,30 @@ export const tokenCreator = async (tokenAddress: string) => {
     const contract = tickerContract(tokenAddress);
     const tokenOwner = await contract.creator();
     return tokenOwner;
+};
+
+export const creatorFee = async (tokenAddress: string) => {
+    const contract = tickerContract(tokenAddress);
+    const feePercentage = await contract.creatorFeePercentage();
+    return feePercentage;
+};
+
+export const totalTokenBurn = async (tokenAddress: string) => {
+    const contract = tickerContract(tokenAddress);
+    const totalBurn = await contract.tokenBurn();
+    return totalBurn;
+};
+
+export const totalETHFee = async (tokenAddress: string) => {
+    const contract = tickerContract(tokenAddress);
+    const ethFee = await contract.totalEthFeesCollected();
+    return ethFee;
+};
+
+export const totalTokenFee = async (tokenAddress: string) => {
+    const contract = tickerContract(tokenAddress);
+    const tokenFee = await contract.totalTokenFeesCollected();
+    return tokenFee;
 };
 
 export const tokenBalance = async (tokenAddress: string, address: string) => {

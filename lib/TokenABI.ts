@@ -1,6 +1,42 @@
-export const TickerToken = [
+export const tokenABI = [
 	{
-		"inputs": [],
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_tokenName",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_tokenSymbol",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_tokenImageUrl",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_tokenDescription",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_creatorFeePercentage",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_ethReserve",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_tokenReserve",
+				"type": "uint256"
+			}
+		],
 		"stateMutability": "nonpayable",
 		"type": "constructor"
 	},
@@ -209,13 +245,6 @@ export const TickerToken = [
 	},
 	{
 		"inputs": [],
-		"name": "collectFeesForDevelopment",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
 		"name": "creator",
 		"outputs": [
 			{
@@ -229,20 +258,7 @@ export const TickerToken = [
 	},
 	{
 		"inputs": [],
-		"name": "decimals",
-		"outputs": [
-			{
-				"internalType": "uint8",
-				"name": "",
-				"type": "uint8"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "ethReserve",
+		"name": "creatorFeePercentage",
 		"outputs": [
 			{
 				"internalType": "uint256",
@@ -255,12 +271,12 @@ export const TickerToken = [
 	},
 	{
 		"inputs": [],
-		"name": "factory",
+		"name": "decimals",
 		"outputs": [
 			{
-				"internalType": "address",
+				"internalType": "uint8",
 				"name": "",
-				"type": "address"
+				"type": "uint8"
 			}
 		],
 		"stateMutability": "view",
@@ -293,42 +309,6 @@ export const TickerToken = [
 		"type": "function"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_creator",
-				"type": "address"
-			},
-			{
-				"internalType": "string",
-				"name": "_name",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_symbol",
-				"type": "string"
-			}
-		],
-		"name": "initialize",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "initialTokenAmount",
-				"type": "uint256"
-			}
-		],
-		"name": "initializeLiquidity",
-		"outputs": [],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
 		"inputs": [],
 		"name": "name",
 		"outputs": [
@@ -339,6 +319,13 @@ export const TickerToken = [
 			}
 		],
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "payRoyalty",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -387,12 +374,38 @@ export const TickerToken = [
 	},
 	{
 		"inputs": [],
-		"name": "tokenReserve",
+		"name": "tokenBurn",
 		"outputs": [
 			{
 				"internalType": "uint256",
 				"name": "",
 				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "tokenDescription",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "tokenImageUrl",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
 			}
 		],
 		"stateMutability": "view",

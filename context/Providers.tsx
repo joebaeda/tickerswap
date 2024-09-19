@@ -2,20 +2,19 @@
 
 import React, { createContext, useContext, useEffect, useState, ReactNode, useCallback } from 'react';
 import { ethers, Signer } from 'ethers';
-import { yourTokenChainId } from '@/contracts/YourToken';
 
-interface WalletContextProps {
+interface ProvidersProps {
     signer: Signer | null;
     address: string;
     balances: string;
-    isCorrectNetwork: boolean;
+    chainIds: string;
     isNoWallet: boolean;
     isConnected: boolean;
     connectWallet: () => void;
     disconnectWallet: () => void;
 }
 
-const WalletContext = createContext<WalletContextProps | undefined>(undefined);
+const WalletContext = createContext<ProvidersProps | undefined>(undefined);
 
 export const useWallet = () => {
     const context = useContext(WalletContext);
@@ -33,7 +32,7 @@ export const WalletProvider: React.FC<WalletProviderProps> = ({ children }) => {
     const [signer, setSigner] = useState<Signer | null>(null);
     const [address, setAddress] = useState<string>('');
     const [balances, setBalances] = useState<string>('');
-    const [isCorrectNetwork, setIsCorrectNetwork] = useState<boolean>(false);
+    const [chainIds, setChainIds] = useState<string>('');
     const [isNoWallet, setIsNoWallet] = useState<boolean>(false);
     const [isConnected, setIsConnected] = useState<boolean>(false);
 
@@ -47,22 +46,18 @@ export const WalletProvider: React.FC<WalletProviderProps> = ({ children }) => {
             const provider = new ethers.BrowserProvider(window.ethereum);
             const network = await provider.getNetwork();
 
-            if (network.chainId === BigInt(yourTokenChainId)) {
-                const signer = await provider.getSigner();
-                const userAddress = await signer.getAddress();
-                const userBalances = await provider.getBalance(userAddress);
-                setSigner(signer);
-                setAddress(userAddress);
-                setIsCorrectNetwork(true);
-                setIsNoWallet(false);
-                setBalances(ethers.formatEther(userBalances));
-                setIsConnected(true);
-                console.log(`Connected with address: ${userAddress}`);
-            } else {
-                setIsCorrectNetwork(false);
-                setIsNoWallet(false);
-                setIsConnected(false);
-            }
+            const signer = await provider.getSigner();
+            const userAddress = await signer.getAddress();
+            const userBalances = await provider.getBalance(userAddress);
+
+            setChainIds(network.chainId.toString());
+            setSigner(signer);
+            setAddress(userAddress);
+            setIsNoWallet(false);
+            setBalances(ethers.formatEther(userBalances));
+            setIsConnected(true);
+            console.log(`Connected with address: ${userAddress}`);
+
         } catch (error) {
             console.error('Failed to connect wallet:', error);
             setIsNoWallet(true);
@@ -74,7 +69,7 @@ export const WalletProvider: React.FC<WalletProviderProps> = ({ children }) => {
         setSigner(null);
         setAddress('');
         setBalances('');
-        setIsCorrectNetwork(false);
+        setChainIds('');
         setIsNoWallet(false);
         setIsConnected(false);
     }, []);
@@ -85,7 +80,6 @@ export const WalletProvider: React.FC<WalletProviderProps> = ({ children }) => {
         if (window?.ethereum) {
             const handleChainChanged = () => {
                 console.log('Network changed');
-                window.location.reload(); // Reload the page on network change
             };
 
             const handleAccountsChanged = (accounts: string[]) => {
@@ -116,7 +110,7 @@ export const WalletProvider: React.FC<WalletProviderProps> = ({ children }) => {
     }, [connectWallet, disconnectWallet]);
 
     return (
-        <WalletContext.Provider value={{ signer, address, balances, isCorrectNetwork, isNoWallet, isConnected, connectWallet, disconnectWallet }}>
+        <WalletContext.Provider value={{ signer, address, balances, chainIds, isNoWallet, isConnected, connectWallet, disconnectWallet }}>
             {children}
         </WalletContext.Provider>
     );
@@ -129,7 +123,7 @@ export const WalletButton = () => {
         <div>
             {!isConnected ? (
                 <button
-                    className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white font-bold py-2 px-6 rounded shadow-md transform hover:scale-105 transition duration-300"
+                    className="w-full bg-orange-500 text-white font-bold py-3 rounded-xl shadow-md z-50"
                     onClick={connectWallet}
                 >
                     Connect Wallet

@@ -2,7 +2,7 @@ import React from 'react';
 
 interface ToastProps {
     message: string;
-    type: 'success' | 'error';
+    type: 'success' | 'warning' | 'error';
     onClose: () => void;
 }
 
@@ -10,11 +10,11 @@ const Toast: React.FC<ToastProps> = ({ message, type, onClose }) => {
     const toastStyles =
         type === 'success'
             ? 'bg-green-500 text-white'
-            : 'bg-red-500 text-white';
+            : type === 'warning' ? 'bg-orange-500 text-white' : 'bg-red-500 text-white';
 
     return (
         <div
-            className={`fixed top-[10%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 p-4 rounded-xl shadow-lg z-50
+            className={`fixed top-[8%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 p-4 rounded-xl shadow-lg z-50
             ${toastStyles} 
             w-11/12 sm:w-[490px] font-mono
             `}

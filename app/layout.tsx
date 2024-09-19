@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import { WalletProvider } from "@/context/WalletContextProvider";
+import { WalletProvider } from "@/context/Providers";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -16,18 +16,18 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Ticker Token | Ticker Swap", // Change with your own token name
-  description: "Ticker Token is more than just a digital asset, it's a story of innovation, community, and trust.", // Change with your own description
+  title: "Ticker Swap | Story of Innovation",
+  description: "Each Token on the Ticker Swap ecosystem is more than just a digital asset, it's a story of innovation, community, and trust.",
   openGraph: {
-    title: "Ticker Token | Ticker Swap", // Change with your own token name
-    description: "Ticker Token is more than just a digital asset, it's a story of innovation, community, and trust.", // Change with your own description
-    url: "https://tickerswap.xyz", // Change with your own domain
+    title: "Ticker Swap",
+    description: "Each Token on the Ticker Swap ecosystem is more than just a digital asset, it's a story of innovation, community, and trust.",
+    url: "https://tickerswap.xyz",
     images: [
       {
-        url: "https://tickerswap.xyz/og-image.jpg", // Change with your own image (1200px x 630px)
+        url: "https://tickerswap.xyz/og-image.jpg",
         width: 1200,
         height: 600,
-        alt: "Ticker Token", // Change with your own token name
+        alt: "Ticker Swap",
       },
     ],
     videos: [{
@@ -41,9 +41,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: "Ticker Token | Ticker Swap", // Change with your own token name
-    description: "Ticker Token is more than just a digital asset, it's a story of innovation, community, and trust.", // Change with your own description
-    images: ["https://tickerswap.xyz/og-image.jpg"], // Change with your own image (1200px x 630px)
+    title: "Ticker Swap",
+    description: "Each Token on the Ticker Swap ecosystem is more than just a digital asset, it's a story of innovation, community, and trust.",
+    images: ["https://tickerswap.xyz/og-image.jpg"],
   },
   manifest: "/manifest.json",
   icons: "/favicon.ico"

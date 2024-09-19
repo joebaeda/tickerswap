@@ -1,9 +1,9 @@
 import React from 'react';
 
-const NoWalletDetected: React.FC = () => {
-    const isWalletInstalled = typeof window.ethereum !== 'undefined';
+const Metamask: React.FC = () => {
+    const isMetamask = typeof window.ethereum !== 'undefined';
 
-    if (isWalletInstalled) {
+    if (isMetamask) {
         return null; // Don't render anything if the wallet is installed
     }
 
@@ -25,4 +25,4 @@ const NoWalletDetected: React.FC = () => {
     );
 };
 
-export default NoWalletDetected;
+export default Metamask;
