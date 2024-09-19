@@ -1,5 +1,5 @@
 import { ethers } from 'ethers';
-import { tokenABI } from './tokenABI';
+import { tokenABI } from './TokenABI';
 
 export const tickerContract = (tokenAddress?: string, signer?: ethers.Signer) => {
   const provider = new ethers.BrowserProvider(window.ethereum);
