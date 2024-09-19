@@ -52,7 +52,7 @@ interface TokenContract {
 }
 
 const TokenCard = () => {
-    const { data } = useContractData();
+    const { data, refreshData } = useContractData();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedToken, setSelectedToken] = useState<TokenContract | null>(null);
     const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
@@ -135,20 +135,25 @@ const TokenCard = () => {
     return (
         <div className="fixed inset-0 p-4 rounded-t-2xl bg-gray-50 top-[21%] overflow-hidden overflow-y-auto custom-scroll z-50">
             {/* Search Input */}
-            <div className="mb-4">
+            <div className="flex flex-row mb-4">
                 <input
                     type="text"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     placeholder="Search tokens or type contract address, name or symbol"
-                    className="w-full p-4 focus:outline-none text-gray-500 font-mono border border-lime-400 rounded-xl"
+                    className="w-full p-4 focus:outline-none text-gray-500 font-mono border border-r-0 border-lime-400 rounded-l-xl"
                 />
+                <button onClick={refreshData} className="p-4 bg-white border border-l-0 border-lime-500 rounded-r-xl">
+                    <svg width="32" height="32" fill="goldenrod" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7 12v-2l-4 3 4 3v-2h2.997A6.006 6.006 0 0 0 16 8h-2a4 4 0 0 1-3.996 4zM9 2H6.003A6.006 6.006 0 0 0 0 8h2a4 4 0 0 1 3.996-4H9v2l4-3-4-3z" fillRule="evenodd" />
+                    </svg>
+                </button>
             </div>
 
             {/* Token Card List */}
             <div className="text-white font-mono">
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                    {filteredTokens.map((token, index) => (
+                    {filteredTokens.toReversed().map((token, index) => (
                         <div
                             key={index}
                             className="hover:shadow-lg bg-gradient-to-br from-amber-500 to-amber-200 rounded-xl p-4"
@@ -156,7 +161,7 @@ const TokenCard = () => {
                             {/* Token Logo, Chain name and chain logo */}
                             <div className="relative flex justify-end items-center mt-2">
                                 <Image
-                                    src={token.tokenLogoUrls.replace("ipfs://", "https://ipfs.io/ipfs/")}
+                                    src={token.tokenLogoUrls.replace("ipfs://", "https://gateway.pinata.cloud/ipfs/")}
                                     alt={`${token.tokenName || 'Token'} logo`}
                                     width={250}
                                     height={250}
@@ -206,7 +211,7 @@ const TokenCard = () => {
                     {/* Token Image */}
                     <div className="sm:w-1/3 flex justify-center mt-2">
                         <Image
-                            src={selectedToken?.tokenLogoUrls ? selectedToken.tokenLogoUrls.replace("ipfs://", "https://ipfs.io/ipfs/") : "/poop.webp"}
+                            src={selectedToken?.tokenLogoUrls ? selectedToken.tokenLogoUrls.replace("ipfs://", "https://gateway.pinata.cloud/ipfs/") : "/poop.webp"}
                             alt={`${selectedToken?.tokenName || 'Token'} logo`}
                             width={350}
                             height={350}
