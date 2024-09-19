@@ -10,8 +10,8 @@ import {
     ethPriceInToken,
     tokenBalance,
     creatorFee
-} from '../../lib/Token';
-import Toast from '../Toast';
+} from '@/lib/Token';
+import Toast from './Toast';
 
 interface SwapProps {
     tokenAddress: string;

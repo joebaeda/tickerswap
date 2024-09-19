@@ -1,6 +1,6 @@
 import useContractData from "@/hook/useContractData";
 import Image from "next/image";
-import Swap from "./card/Swap";
+import Swap from "./Swap";
 import { useState, useEffect } from "react";
 import { useWallet } from "@/context/Providers";
 
