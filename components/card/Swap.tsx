@@ -10,7 +10,7 @@ import {
     ethPriceInToken,
     tokenBalance,
     creatorFee
-} from '@/lib/Token';
+} from '../../lib/Token';
 import Toast from '../Toast';
 
 interface SwapProps {
