@@ -20,12 +20,10 @@ interface TokenCardProps {
 const useContractData = () => {
     const [data, setData] = useState<TokenCardProps[]>([]);
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
 
     // Fetch data from the API
     const fetchDataFromAPI = async () => {
         setLoading(true);
-        setError(null);
         try {
             const response = await fetch('/api/contractData');
             const result = await response.json();
@@ -35,10 +33,10 @@ const useContractData = () => {
                 // Optionally save to localStorage
                 localStorage.setItem('contractData', JSON.stringify(result.data));
             } else {
-                setError('Failed to fetch contract data');
+                console.log('Failed to fetch contract data');
             }
         } catch (err) {
-            setError('Error occurred while fetching contract data');
+            console.log('Error occurred while fetching contract data');
         } finally {
             setLoading(false);
         }
@@ -53,16 +51,23 @@ const useContractData = () => {
     };
 
     const refreshData = async () => {
-        await fetchDataFromAPI();
+        await fetchDataFromAPI(); // Allow manual refresh or data update
     };
 
+    // Hook to handle runtime data updates
     useEffect(() => {
-        // Load from localStorage and fetch from API on mount
+        // Load from localStorage initially
         loadFromLocalStorage();
-        fetchDataFromAPI();
+
+        // Fetch new data every X seconds to keep the app up-to-date
+        const interval = setInterval(() => {
+            fetchDataFromAPI();
+        }, 1800000); // Set interval time (e.g., 30 minutes)
+
+        return () => clearInterval(interval); // Cleanup interval on unmount
     }, []);
 
-    return { data, refreshData, loading, error };
+    return { data, refreshData, loading };
 };
 
 export default useContractData;

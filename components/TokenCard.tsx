@@ -156,20 +156,20 @@ const TokenCard = () => {
                     {filteredTokens.toReversed().map((token, index) => (
                         <div
                             key={index}
-                            className="hover:shadow-lg bg-gradient-to-br from-amber-500 to-amber-200 rounded-xl p-4"
+                            className="hover:shadow-lg bg-gradient-to-br from-amber-500 to-amber-200 rounded-xl"
                         >
                             {/* Token Logo, Chain name and chain logo */}
-                            <div className="relative flex justify-end items-center mt-2">
+                            <div className="relative flex justify-end items-center">
                                 <Image
                                     src={token.tokenLogoUrls.replace("ipfs://", "https://gateway.pinata.cloud/ipfs/")}
                                     alt={`${token.tokenName || 'Token'} logo`}
                                     width={250}
                                     height={250}
                                     priority={true}
-                                    className="w-full rounded-xl border-lime-400 border object-cover bg-gray-200"
+                                    className="w-full rounded-3xl object-cover p-4"
                                 />
-                                <div className="absolute top-0 right-0 bg-gradient-to-br from-amber-500 to-amber-200 p-2 flex flex-row rounded-bl-xl justify-between items-center gap-2">
-                                    <p className="text-sm sm:text-md">{token.tokenChainName}</p>
+                                <div className="absolute top-0 right-0 bg-gradient-to-br from-amber-500 to-amber-200 p-2 flex flex-row rounded-bl-xl rounded-tr-xl justify-between items-center gap-2">
+                                    <p className="text-xs sm:text-sm">{token.tokenChainName}</p>
                                     <Image
                                         src={token.tokenChainLogoUrls}
                                         alt="Chain logo"
@@ -182,7 +182,7 @@ const TokenCard = () => {
                             </div>
 
                             {/* Token Name and Symbol */}
-                            <div onClick={() => handleCardClick(token)} className="flex flex-col mt-2 cursor-pointer">
+                            <div onClick={() => handleCardClick(token)} className="px-4 pb-4 flex flex-col cursor-pointer">
                                 <h2 className="text-xl font-semibold">{token.tokenName}</h2>
                                 <p className="text-lg">{token.tokenSymbol}</p>
                             </div>
