@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useEffect, useState, ReactNode, useCallback } from 'react';
 import { ethers, Signer } from 'ethers';
-import { networks } from '@/lib/networks';
+import { networks } from '../lib/networks';
 
 interface NetworkProps {
     networkName: string;
