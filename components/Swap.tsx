@@ -181,7 +181,7 @@ const Swap: React.FC<SwapProps> = ({ tokenAddress, signer, addressConnected, add
             
 
             {/* Swap Form */}
-            <div className="w-full sm:p-4 text-gray-500">
+            <div className="w-full sm:p-4">
                 <div className="space-y-4">
                     {/* Input 1: Swap from */}
                     <div className="p-4 bg-white rounded-xl shadow-sm">

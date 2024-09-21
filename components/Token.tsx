@@ -3,17 +3,17 @@ import Swap from "./Swap";
 import { useState, useEffect } from "react";
 import { useWallet } from "@/context/Providers";
 
-interface ModalProps {
+interface TokenModalProps {
     isOpen: boolean;
     onClose: () => void;
     children: React.ReactNode;
 }
 
-const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
+const TokenModal: React.FC<TokenModalProps> = ({ isOpen, onClose, children }) => {
     if (!isOpen) return null;
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-md">
+        <div className="fixed inset-0 z-20 flex items-center justify-center backdrop-blur-md">
             <div className="m-4 sm:m-0 max-h-[96vh] flex flex-col items-center justify-center w-full overflow-hidden">
                 <div className="relative overflow-y-auto custom-scroll">
                     {children}
@@ -21,11 +21,16 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
                 <button
                     onClick={onClose}
                     aria-label="Close"
-                    className="absolute top-0 right-0 bg-gray-50 rounded-bl-2xl p-2"
+                    className="absolute -top-8"
                 >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 70 70" xmlSpace="preserve">
-                        <path d="M18.041 14.021c1.013 0 2.021.385 2.79 1.153l14.196 14.142 14.142-14.142a3.93 3.93 0 0 1 2.791-1.152c1.024 0 2.053.394 2.839 1.18 1.563 1.562 1.574 4.082.027 5.63L40.685 34.973l14.142 14.196c1.547 1.547 1.535 4.068-.026 5.631a4 4 0 0 1-2.839 1.178 3.93 3.93 0 0 1-2.792-1.152L35.027 40.63 20.831 54.825a3.93 3.93 0 0 1-2.791 1.154 4 4 0 0 1-2.839-1.18c-1.563-1.563-1.574-4.084-.027-5.631l14.197-14.196-14.197-14.141c-1.547-1.547-1.533-4.068.027-5.63a4 4 0 0 1 2.84-1.18m0-4a7.96 7.96 0 0 0-5.667 2.351c-3.12 3.121-3.132 8.185-.028 11.287l11.363 11.319-11.363 11.361c-3.105 3.107-3.092 8.172.028 11.289a7.96 7.96 0 0 0 5.666 2.352 7.9 7.9 0 0 0 5.62-2.326l11.362-11.361 11.313 11.355a7.9 7.9 0 0 0 5.626 2.33c2.138 0 4.15-.834 5.666-2.35 3.12-3.121 3.132-8.184.027-11.287L46.336 34.978 57.654 23.66c3.104-3.106 3.092-8.17-.028-11.287a7.96 7.96 0 0 0-5.666-2.351 7.9 7.9 0 0 0-5.618 2.323l-11.32 11.319L23.654 12.34a7.9 7.9 0 0 0-5.613-2.319" />
-                        <path d="M50.7 21.714a.999.999 0 0 1-.707-1.707l2.121-2.121a.999.999 0 1 1 1.414 1.414l-2.121 2.121a1 1 0 0 1-.707.293m-9.899 9.9a.999.999 0 0 1-.707-1.707l7.07-7.07a.999.999 0 1 1 1.414 1.414l-7.07 7.07a1 1 0 0 1-.707.293" />
+                    <svg width="170" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 504 504">
+                        <path fill="#fff" d="m133.6 29.5 38.1 213.3-15.5 2.8-37.1-207.7c4.7-3 9.5-5.7 14.5-8.4m193.8 163.6-14 7.2L212.8 3c5.5-.9 11-1.5 16.6-2z" />
+                        <path fill="#fff" d="m161.2 184.3 10.5 58.5-15.6 2.8-10-56.5zm166.2 8.8-14 7.2-28.3-55.5 15.2-4.9z" />
+                        <path fill="#daa520" d="M451 308.9 120.7 414.1c-1.3.4-2.7-.3-3.1-1.6L59.3 229.7c-.4-1.3.3-2.7 1.6-3.1l330.3-105.2c1.3-.4 2.7.3 3.1 1.6l58.2 182.8c.5 1.3-.2 2.7-1.5 3.1" />
+                        <path fill="#fff" d="m429.4 298.4-297.2 94.7c-1.7.6-3.6-.4-4.2-2.1L80.3 241.2c-.6-1.7.4-3.6 2.1-4.2l297.2-94.7c1.7-.6 3.6.4 4.2 2.1l47.7 149.7c.6 1.9-.4 3.8-2.1 4.3m-296.1 87.4 290.9-92.7-45.7-143.4-290.9 92.7z" />
+                        <circle cx="320.4" cy="202.3" r="15.3" />
+                        <circle cx="165.5" cy="251.7" r="15.3" />
+                        <path fill="#fff" d="M175.7 252.1c-3.3 0-6.3-2.1-7.4-5.3-1.4-4.1.8-8.6 4.9-10L309 190.1c4.1-1.4 8.6.8 10 4.9s-.8 8.6-4.9 10l-135.8 46.7c-.9.2-1.7.4-2.6.4m-7.9 88.7c6.1-1.9 10.2-5.9 12.6-11.9l10.5 5.6c-4 9.1-10.3 14.9-18.8 17.7-8.5 2.7-16.4 2.3-23.6-1.3s-12.1-9.5-14.8-17.7c-2.6-8.2-2-15.9 1.9-23.2s9.8-12.2 17.9-14.8c9.1-2.9 17.7-1.9 26.1 3.1l-4.9 11.1c-5.4-3.6-11.1-4.5-16.8-2.6-4.6 1.5-8.1 4.3-10.4 8.3-2.3 4.1-2.7 8.7-1 13.8 1.6 5.1 4.5 8.8 8.6 10.9 4 2 8.2 2.4 12.7 1m35.4.6-17.6-55.2 12.3-3.9 14.1 44.2 23.5-7.5 3.5 11zm86.9-36.1c-3.8 7.2-9.8 12.2-18 14.8s-15.9 2.1-23.2-1.6-12.3-9.6-14.9-17.7-2-15.8 1.9-23c3.8-7.2 9.8-12.2 18-14.8s15.9-2.1 23.2 1.6 12.3 9.6 14.9 17.7 2 15.7-1.9 23m-10.7-19c-1.6-4.9-4.5-8.6-8.8-11.1s-8.7-3-13.3-1.5-7.9 4.5-10 8.9c-2.1 4.5-2.3 9.2-.7 14.1s4.5 8.6 8.7 11c4.3 2.4 8.7 2.9 13.3 1.5 4.6-1.5 7.9-4.4 10-8.9 2.2-4.4 2.4-9.1.8-14m29.8-27.4c-.9 1.4-1.1 2.8-.5 4.4.5 1.6 1.6 2.7 3.4 3.1 1.8.5 5.5.5 11.1.1s10.3.3 14.1 1.9c3.7 1.7 6.4 5 8 9.9s1 9.6-1.7 13.8q-4.05 6.45-13.2 9.3c-8.7 2.8-17.6 2.1-26.7-2.2L308 288c7.6 3.3 13.9 4.2 19 2.5 2.3-.7 3.9-1.8 4.9-3.2s1.2-2.9.7-4.6-1.6-2.8-3.3-3.3-4.7-.7-9.1-.4c-6.9.5-12.3 0-16-1.5-3.8-1.5-6.5-4.9-8.1-10.1-1.7-5.2-1.1-9.9 1.8-13.9s7.1-7 12.7-8.8c3.7-1.2 7.6-1.7 11.7-1.6s7.9.9 11.3 2.3l-3.4 11c-6-2.1-11.5-2.3-16.6-.7-2.1.8-3.5 1.8-4.4 3.2m73.3-35.6 3.5 11-27.5 8.8 3.6 11.4 24.7-7.9 3.4 10.5-24.7 7.9 3.7 11.5 28.3-9.1 3.5 10.9-40.7 13-17.6-55.3z" />
                     </svg>
                 </button>
             </div>
@@ -47,7 +52,6 @@ interface TokenContract {
     tokenChainRPCUrls: string;
     tokenChainExplorerUrls: string;
     deployer: string;
-    timestamp: string;
 }
 
 const TokenCard = () => {
@@ -60,13 +64,13 @@ const TokenCard = () => {
     const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
     const [tokenBlockExplorer, setTokenBlockExplorer] = useState<string>('');
     const [nativeCurrency, setNativeCurrency] = useState<string>('');
-    const { signer, address, balances, chainIds } = useWallet();
+    const { signer, address, balances, network } = useWallet();
 
     // Fetch data from the API
     const fetchDataFromAPI = async () => {
         setLoading(true);
         try {
-            const response = await fetch('/api/contractData');
+            const response = await fetch('/api/token');
             const result = await response.json();
 
             if (result.success) {
@@ -112,7 +116,7 @@ const TokenCard = () => {
     }, [searchTerm, data]);
 
     const handleCardClick = (token: TokenContract) => {
-        if (Number(chainIds) !== token.tokenChainId) {
+        if (network?.chainIdNumber !== token.tokenChainId) {
             setSelectedToken(token);
             setIsConfirmModalOpen(true);
         } else {
@@ -172,7 +176,7 @@ const TokenCard = () => {
 
     return (
         <div className="fixed inset-0 p-4 rounded-t-2xl bg-gray-50 top-[21%] overflow-hidden overflow-y-auto custom-scroll z-50">
-            
+
             {/* Search Input */}
             <div className="flex flex-row mb-4">
                 <input
@@ -212,7 +216,7 @@ const TokenCard = () => {
                                         width={250}
                                         height={250}
                                         priority={true}
-                                        className="w-full rounded-3xl object-cover p-4"
+                                        className="w-full h-48 rounded-3xl object-cover p-4"
                                     />
                                     <div className="absolute top-0 right-0 bg-gradient-to-br from-amber-500 to-amber-200 p-2 flex flex-row rounded-bl-xl rounded-tr-xl justify-between items-center gap-2">
                                         <p className="text-xs sm:text-sm">{token.tokenChainName}</p>
@@ -239,7 +243,7 @@ const TokenCard = () => {
             </div>
 
             {/* Swap Modal */}
-            <Modal isOpen={isModalOpen} onClose={closeModal}>
+            <TokenModal isOpen={isModalOpen} onClose={closeModal}>
                 {selectedToken && (
                     <Swap
                         tokenAddress={selectedToken.tokenAddress}
@@ -250,10 +254,10 @@ const TokenCard = () => {
                         chainBlockExplorer={tokenBlockExplorer}
                     />
                 )}
-            </Modal>
+            </TokenModal>
 
             {/* Network Switch Confirmation Modal */}
-            <Modal isOpen={isConfirmModalOpen} onClose={closeConfirmModal}>
+            <TokenModal isOpen={isConfirmModalOpen} onClose={closeConfirmModal}>
                 <div className="max-w-2xl p-4 text-gray-500 bg-gray-50 rounded-xl font-mono flex flex-col sm:flex-row gap-6">
                     {/* Token Image */}
                     <div className="sm:w-1/3 flex justify-center mt-2">
@@ -314,10 +318,27 @@ const TokenCard = () => {
                         </div>
                     </div>
                 </div>
-            </Modal>
+            </TokenModal>
 
         </div>
     );
 };
 
-export default TokenCard;
+const Token = () => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const openModal = () => setIsModalOpen(true);
+    const closeModal = () => setIsModalOpen(false);
+
+    return (
+        <div>
+            <button onClick={openModal} className="w-full mt-4 bg-orange-500 hover:bg-orange-600 font-mono font-semibold text-white p-3 rounded-xl">Swap</button>
+
+            <TokenModal isOpen={isModalOpen} onClose={closeModal}>
+                <TokenCard />
+            </TokenModal>
+        </div>
+    );
+};
+
+export default Token;

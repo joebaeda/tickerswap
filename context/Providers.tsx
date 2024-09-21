@@ -2,12 +2,24 @@
 
 import React, { createContext, useContext, useEffect, useState, ReactNode, useCallback } from 'react';
 import { ethers, Signer } from 'ethers';
+import { networks } from '@/lib/networks';
+
+interface NetworkProps {
+    networkName: string;
+    chainIdHex: string;
+    chainIdNumber: number;
+    rpcUrl: string;
+    explorer: string;
+    networkLogo: string;
+    nativeCurrency: string;
+}
 
 interface ProvidersProps {
     signer: Signer | null;
     address: string;
     balances: string;
-    chainIds: string;
+    network: NetworkProps | null;
+    isWrongNetwork: boolean;
     isNoWallet: boolean;
     isConnected: boolean;
     connectWallet: () => void;
@@ -32,7 +44,8 @@ export const WalletProvider: React.FC<WalletProviderProps> = ({ children }) => {
     const [signer, setSigner] = useState<Signer | null>(null);
     const [address, setAddress] = useState<string>('');
     const [balances, setBalances] = useState<string>('');
-    const [chainIds, setChainIds] = useState<string>('');
+    const [network, setNetwork] = useState<NetworkProps | null>(null);
+    const [isWrongNetwork, setIsWrongNetwork] = useState<boolean>(false);
     const [isNoWallet, setIsNoWallet] = useState<boolean>(false);
     const [isConnected, setIsConnected] = useState<boolean>(false);
 
@@ -46,11 +59,20 @@ export const WalletProvider: React.FC<WalletProviderProps> = ({ children }) => {
             const provider = new ethers.BrowserProvider(window.ethereum);
             const network = await provider.getNetwork();
 
+            // Find the matching network
+            const networkInfo = networks.find((net) => BigInt(net.chainIdNumber) === network.chainId);
+
+            if (!networkInfo) {
+                setIsWrongNetwork(true);
+            } else {
+                setNetwork(networkInfo);
+                setIsWrongNetwork(false);
+            }
+
+
             const signer = await provider.getSigner();
             const userAddress = await signer.getAddress();
             const userBalances = await provider.getBalance(userAddress);
-
-            setChainIds(network.chainId.toString());
             setSigner(signer);
             setAddress(userAddress);
             setIsNoWallet(false);
@@ -69,7 +91,8 @@ export const WalletProvider: React.FC<WalletProviderProps> = ({ children }) => {
         setSigner(null);
         setAddress('');
         setBalances('');
-        setChainIds('');
+        setNetwork(null);
+        setIsWrongNetwork(false);
         setIsNoWallet(false);
         setIsConnected(false);
     }, []);
@@ -110,27 +133,8 @@ export const WalletProvider: React.FC<WalletProviderProps> = ({ children }) => {
     }, [connectWallet, disconnectWallet]);
 
     return (
-        <WalletContext.Provider value={{ signer, address, balances, chainIds, isNoWallet, isConnected, connectWallet, disconnectWallet }}>
+        <WalletContext.Provider value={{ signer, address, balances, network, isWrongNetwork, isNoWallet, isConnected, connectWallet, disconnectWallet }}>
             {children}
         </WalletContext.Provider>
-    );
-};
-
-export const WalletButton = () => {
-    const { isConnected, connectWallet } = useWallet();
-
-    return (
-        <div>
-            {!isConnected ? (
-                <button
-                    className="w-full bg-orange-500 text-white font-bold py-3 rounded-xl shadow-md z-50"
-                    onClick={connectWallet}
-                >
-                    Connect Wallet
-                </button>
-            ) : (
-                <p className="text-center text-green-600">Wallet Connected</p>
-            )}
-        </div>
     );
 };

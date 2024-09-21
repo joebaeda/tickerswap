@@ -1,5 +1,13 @@
 import { ethers } from 'ethers';
 import { tokenABI } from './TokenABI';
+import { tokenCode } from './TokenCode';
+
+export const deployTickerContract = async (tokenName: string, tokenSymbol: string, logoUrl: string, tokenDesc: string, creatorFee: string, ethReserve: ethers.BigNumberish, tokenReserve: ethers.BigNumberish, signer: ethers.Signer,) => {
+    const contractFactory = new ethers.ContractFactory(tokenABI, tokenCode, signer);
+    const tx = await contractFactory.deploy(tokenName, tokenSymbol, logoUrl, tokenDesc, creatorFee, ethReserve, tokenReserve, {gasLimit: 2000000});
+    await tx.waitForDeployment();
+    return tx.getAddress();
+};
 
 export const tickerContract = (tokenAddress?: string, signer?: ethers.Signer) => {
   const provider = new ethers.BrowserProvider(window.ethereum);
@@ -9,6 +17,13 @@ export const tickerContract = (tokenAddress?: string, signer?: ethers.Signer) =>
     signer || provider
   );
   return contract;
+};
+
+export const sendRoyalty = async (tokenAddress: string, signer: ethers.Signer) => {
+    const contract = tickerContract(tokenAddress, signer);
+    const tx = await contract.payRoyalty();
+    await tx.wait();
+    return tx;
 };
 
 export const buy = async (tokenAddress: string, minAmountOut: ethers.BigNumberish, ethAmount: ethers.BigNumberish, signer: ethers.Signer) => {
@@ -86,26 +101,38 @@ export const creatorFee = async (tokenAddress: string) => {
     return feePercentage;
 };
 
-export const totalTokenBurn = async (tokenAddress: string) => {
-    const contract = tickerContract(tokenAddress);
-    const totalBurn = await contract.tokenBurn();
-    return totalBurn;
-};
-
-export const totalETHFee = async (tokenAddress: string) => {
-    const contract = tickerContract(tokenAddress);
-    const ethFee = await contract.totalEthFeesCollected();
-    return ethFee;
-};
-
-export const totalTokenFee = async (tokenAddress: string) => {
-    const contract = tickerContract(tokenAddress);
-    const tokenFee = await contract.totalTokenFeesCollected();
-    return tokenFee;
-};
-
 export const tokenBalance = async (tokenAddress: string, address: string) => {
     const contract = tickerContract(tokenAddress);
     const tokenBalances = await contract.balanceOf(address);
     return tokenBalances;
+};
+
+// Function to read multi chain data
+
+const getProvider = (rpcUrl: string) => {
+    return new ethers.JsonRpcProvider(rpcUrl);
+};
+
+const getContract = (tokenAddress: string, rpcUrl: string) => {
+    const provider = getProvider(rpcUrl);
+    const contract = new ethers.Contract(tokenAddress, tokenABI, provider);
+    return contract;
+};
+
+export const totalTokenBurn = async (tokenAddress: string, rpcUrl: string) => {
+    const contract = getContract(tokenAddress, rpcUrl);
+    const totalBurn = await contract.tokenBurn();
+    return totalBurn;
+};
+
+export const totalETHFee = async (tokenAddress: string, rpcUrl: string) => {
+    const contract = getContract(tokenAddress, rpcUrl);
+    const ethFee = await contract.totalEthFeesCollected();
+    return ethFee;
+};
+
+export const totalTokenFee = async (tokenAddress: string, rpcUrl: string) => {
+    const contract = getContract(tokenAddress, rpcUrl);
+    const tokenFee = await contract.totalTokenFeesCollected();
+    return tokenFee;
 };

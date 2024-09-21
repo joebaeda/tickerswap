@@ -15,7 +15,23 @@ interface TokenContract {
   tokenChainRPCUrls: string;
   tokenChainExplorerUrls: string;
   deployer: string;
-  timestamp: string;
+  deployedTime: string;
+}
+
+export async function saveTickerTokenContracts(
+  tokenInfo: TokenContract
+): Promise<void> {
+  const auth = getGoogleAuth();
+  const sheets = google.sheets({ version: 'v4', auth });
+
+  await sheets.spreadsheets.values.append({
+    spreadsheetId: process.env.GOOGLE_SPREADSHEET_ID!,
+    range: 'Sheet1!A:N',
+    valueInputOption: 'RAW',
+    requestBody: {
+      values: [[tokenInfo.tokenAddress, tokenInfo.tokenName, tokenInfo.tokenSymbol, tokenInfo.tokenDescription, tokenInfo.tokenLogoUrls, tokenInfo.tokenChainName, tokenInfo.tokenChainId, tokenInfo.tokenChainHex, tokenInfo.tokenChainLogoUrls, tokenInfo.tokenChainCurrency, tokenInfo.tokenChainRPCUrls, tokenInfo.tokenChainExplorerUrls, tokenInfo.deployer, tokenInfo.deployedTime]],
+    },
+  });
 }
 
 export async function getTickerTokenContracts(): Promise<TokenContract[]> {
@@ -44,7 +60,7 @@ export async function getTickerTokenContracts(): Promise<TokenContract[]> {
       tokenChainRPCUrls: row[10],
       tokenChainExplorerUrls: row[11],
       deployer: row[12],
-      timestamp: row[13],
+      deployedTime: row[13],
     })) as TokenContract[];
   }
 
