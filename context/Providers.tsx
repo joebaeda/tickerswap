@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useEffect, useState, ReactNode, useCallback } from 'react';
 import { ethers, Signer } from 'ethers';
-import { networks } from '@/lib/networks';
+import { supportedNetworks } from '@/lib/supportedNetworks';
 
 interface NetworkProps {
     networkName: string;
@@ -60,7 +60,7 @@ export const WalletProvider: React.FC<WalletProviderProps> = ({ children }) => {
             const network = await provider.getNetwork();
 
             // Find the matching network
-            const networkInfo = networks.find((net) => BigInt(net.chainIdNumber) === network.chainId);
+            const networkInfo = supportedNetworks.find((net) => BigInt(net.chainIdNumber) === network.chainId);
 
             if (!networkInfo) {
                 setIsWrongNetwork(true);

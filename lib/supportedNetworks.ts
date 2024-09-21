@@ -1,4 +1,4 @@
-export const networks = [
+export const supportedNetworks = [
     {
         networkName: "Mainnet",
         chainIdHex: "0x1",

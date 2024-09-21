@@ -6,7 +6,7 @@ import { useWallet } from "@/context/Providers";
 import Metamask from "@/components/Metamask";
 import Token from "@/components/Token";
 import Network from "@/components/Network";
-import { networks } from "@/lib/networks";
+import { supportedNetworks } from "@/lib/supportedNetworks";
 import Deploy from "@/components/Deploy";
 import Creator from "@/components/Creator";
 import Disclaimer from "@/components/Disclaimer";
@@ -158,7 +158,7 @@ export default function Home() {
           </Disclaimer>
         </div>
       ) : (
-        <Network networks={networks} />
+        <Network networks={supportedNetworks} />
       ) : !isConnected ? showOverlay ? (
         <div className="absolute inset-0 backdrop-blur-md flex flex-col items-center justify-center z-10">
           <Disclaimer>
