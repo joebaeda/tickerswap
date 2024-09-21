@@ -6,7 +6,7 @@ import { useWallet } from "@/context/Providers";
 import Metamask from "@/components/Metamask";
 import Token from "@/components/Token";
 import Network from "@/components/Network";
-import { networks } from "../lib/networks";
+import { networks } from "@/lib/networks";
 import Deploy from "@/components/Deploy";
 import Creator from "@/components/Creator";
 import Disclaimer from "@/components/Disclaimer";
