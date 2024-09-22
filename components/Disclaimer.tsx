@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 
 interface DisclaimerProps {
-    children: ReactNode;
+    children: ReactNode; 
 }
 
 const Disclaimer: React.FC<DisclaimerProps> = ({children}) => {
@@ -26,7 +26,7 @@ const Disclaimer: React.FC<DisclaimerProps> = ({children}) => {
                         </span> Upon royalty withdrawal, 25% of the fees go to the token creator, while 75% is retained by the app for operational and maintenance purposes.
                     </li>
                 </ul>
-                <p className="font-bold mt-4">
+                <p className="font-bold my-4">
                     By using this app, you acknowledge and accept that the app only facilitates token creation and trading. You are solely responsible for ensuring compliance with all applicable laws and regulations, and the app is not liable for any financial losses, regulatory issues, or misuse of created tokens.
                 </p>
                 {children}

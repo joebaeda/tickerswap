@@ -27,7 +27,7 @@ const DeployModal: React.FC<DeployModalProps> = ({ isOpen, onClose, children }) 
                     <svg width="170" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 504 504">
                         <path fill="#fff" d="m133.6 29.5 38.1 213.3-15.5 2.8-37.1-207.7c4.7-3 9.5-5.7 14.5-8.4m193.8 163.6-14 7.2L212.8 3c5.5-.9 11-1.5 16.6-2z" />
                         <path fill="#fff" d="m161.2 184.3 10.5 58.5-15.6 2.8-10-56.5zm166.2 8.8-14 7.2-28.3-55.5 15.2-4.9z" />
-                        <path fill="#daa520" d="M451 308.9 120.7 414.1c-1.3.4-2.7-.3-3.1-1.6L59.3 229.7c-.4-1.3.3-2.7 1.6-3.1l330.3-105.2c1.3-.4 2.7.3 3.1 1.6l58.2 182.8c.5 1.3-.2 2.7-1.5 3.1" />
+                        <path fill="rgb(249 115 22)" d="M451 308.9 120.7 414.1c-1.3.4-2.7-.3-3.1-1.6L59.3 229.7c-.4-1.3.3-2.7 1.6-3.1l330.3-105.2c1.3-.4 2.7.3 3.1 1.6l58.2 182.8c.5 1.3-.2 2.7-1.5 3.1" />
                         <path fill="#fff" d="m429.4 298.4-297.2 94.7c-1.7.6-3.6-.4-4.2-2.1L80.3 241.2c-.6-1.7.4-3.6 2.1-4.2l297.2-94.7c1.7-.6 3.6.4 4.2 2.1l47.7 149.7c.6 1.9-.4 3.8-2.1 4.3m-296.1 87.4 290.9-92.7-45.7-143.4-290.9 92.7z" />
                         <circle cx="320.4" cy="202.3" r="15.3" />
                         <circle cx="165.5" cy="251.7" r="15.3" />
@@ -226,7 +226,7 @@ const DeployToken: React.FC<DeployTokenProps> = ({ signer, address, networkChain
                     <form className="w-full">
                         {/* Drag and Drop area */}
                         <div
-                            className={`border-2 border-dashed rounded-lg p-4 cursor-pointer flex flex-col items-center justify-center transition-all ${dragActive ? 'border-blue-500 bg-blue-100' : 'border-gray-300'
+                            className={`border-4 border-dashed rounded-2xl p-4 cursor-pointer flex flex-col items-center justify-center transition-all ${dragActive ? 'border-blue-500 bg-blue-100' : 'border-gray-300'
                                 }`}
                             onDragOver={handleDragOver}
                             onDragLeave={handleDragLeave}
@@ -236,9 +236,14 @@ const DeployToken: React.FC<DeployTokenProps> = ({ signer, address, networkChain
                             {file ? (
                                 <p className="text-center">{file.name}</p>
                             ) : (
-                                <p className="text-center">
-                                    Drag & drop your your token logo here, or <span className="text-blue-500 underline">click to select</span>
-                                </p>
+                                <div className="flex flex-col p-7 justify-center items-center">
+                                    <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M4 1C2.355 1 1 2.355 1 4v1h1V4c0-1.11.89-2 2-2h1V1zm2 0v1h4V1zm5 0v1h1c1.11 0 2 .89 2 2v1h1V4c0-1.645-1.355-3-3-3zM6 5c-.55 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1M1 6v4h1V6zm13 0v4h1V6zM9.5 8l-2 2L6 9l-2 2v.5c0 .5.5.5.5.5h7s.473-.035.5-.5v-1zM1 11v1c0 1.645 1.355 3 3 3h1v-1H4c-1.11 0-2-.89-2-2v-1zm13 0v1c0 1.11-.89 2-2 2h-1v1h1c1.645 0 3-1.355 3-3v-1zm-8 3v1h4v-1zm0 0" fill="#2e3434" fillOpacity=".349" />
+                                    </svg>
+                                    <p className="text-center">
+                                        Drag and drop your token logo, or <span className="text-blue-500 underline">browse</span>
+                                    </p>
+                                </div>
                             )}
                         </div>
 
@@ -363,7 +368,7 @@ const Deploy: React.FC<DeployTokenProps> = ({ signer, address, networkChainId, n
 
     return (
         <div>
-            <button onClick={openModal} className="w-full mt-4 bg-orange-500 hover:bg-orange-600 font-mono font-semibold text-white p-3 rounded-xl">Create</button>
+            <button onClick={openModal} className="w-full border-4 border-white bg-orange-500 hover:bg-orange-600 font-mono font-semibold text-white p-3 rounded-xl">Create</button>
 
             <DeployModal isOpen={isModalOpen} onClose={closeModal}>
                 <DeployToken
