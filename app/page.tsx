@@ -10,6 +10,7 @@ import { supportedNetworks } from "@/lib/supportedNetworks";
 import Deploy from "@/components/Deploy";
 import Creator from "@/components/Creator";
 import Disclaimer from "@/components/Disclaimer";
+import Contact from "@/components/Contact";
 
 export default function Home() {
   const { signer, address, network, isWrongNetwork, isNoWallet, isConnected, connectWallet } = useWallet();
@@ -203,14 +204,13 @@ export default function Home() {
         ) : (
           <>
             {/* Deploy */}
-            <div className="absolute top-[5%] right-20">
-              <Deploy signer={signer} address={address} networkChainId={network?.chainIdNumber as number} networkChainHex={network?.chainIdHex as string} networkChainName={network?.networkName as string} networkChainLogoUrls={network?.networkLogo as string} networkChainRPCUrls={network?.rpcUrl as string} networkChainExplorerUrls={network?.explorer as string} networkChainCurrencySymbol={network?.nativeCurrency as string} />
-            </div>
+            <Deploy signer={signer} address={address} networkChainId={network?.chainIdNumber as number} networkChainHex={network?.chainIdHex as string} networkChainName={network?.networkName as string} networkChainLogoUrls={network?.networkLogo as string} networkChainRPCUrls={network?.rpcUrl as string} networkChainExplorerUrls={network?.explorer as string} networkChainCurrencySymbol={network?.nativeCurrency as string} />
 
             {/* Swap */}
-            <div className="absolute top-[5%] right-44">
-              <Token />
-            </div>
+            <Token />
+
+            {/* Contact */}
+            <Contact />
 
             {/* Creator */}
             <Creator address={address} signer={signer} rpcUrl={network?.rpcUrl as string} />

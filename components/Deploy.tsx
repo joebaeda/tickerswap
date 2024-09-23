@@ -367,7 +367,7 @@ const Deploy: React.FC<DeployTokenProps> = ({ signer, address, networkChainId, n
     const closeModal = () => setIsModalOpen(false);
 
     return (
-        <div>
+        <div className="absolute top-[5%] right-20">
             <button onClick={openModal} className="w-full border-4 border-white bg-orange-500 hover:bg-orange-600 font-mono font-semibold text-white p-3 rounded-xl">Create</button>
 
             <DeployModal isOpen={isModalOpen} onClose={closeModal}>

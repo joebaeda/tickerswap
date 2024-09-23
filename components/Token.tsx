@@ -331,7 +331,7 @@ const Token = () => {
     const closeModal = () => setIsModalOpen(false);
 
     return (
-        <div>
+        <div className="absolute top-[5%] right-44">
             <button onClick={openModal} className="w-full border-4 border-white bg-orange-500 hover:bg-orange-600 font-mono font-semibold text-white p-3 rounded-xl">Swap</button>
 
             <TokenModal isOpen={isModalOpen} onClose={closeModal}>

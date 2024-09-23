@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   title: "Ticker Swap | Story of Innovation",
   description: "Each Token on the Ticker Swap ecosystem is more than just a digital asset, it's a story of innovation, community, and trust.",
   openGraph: {
-    title: "Ticker Swap",
+    title: "Ticker Swap | Story of Innovation",
     description: "Each Token on the Ticker Swap ecosystem is more than just a digital asset, it's a story of innovation, community, and trust.",
     url: "https://tickerswap.xyz",
     images: [
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: "Ticker Swap",
+    title: "Ticker Swap | Story of Innovation",
     description: "Each Token on the Ticker Swap ecosystem is more than just a digital asset, it's a story of innovation, community, and trust.",
     images: ["https://tickerswap.xyz/og-image.jpg"],
   },
