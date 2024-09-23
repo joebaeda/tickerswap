@@ -70,12 +70,18 @@ const TokenCard = () => {
     const fetchDataFromAPI = async () => {
         setLoading(true);
         try {
-            const response = await fetch('/api/token');
+            const response = await fetch('/api/token', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
             const result = await response.json();
 
             if (result.success) {
                 setData(result.data);
-                // Optionally save to localStorage
+                // save to localStorage
                 localStorage.setItem('contractData', JSON.stringify(result.data));
             } else {
                 console.log('Failed to fetch contract data');
