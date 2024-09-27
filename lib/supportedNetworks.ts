@@ -107,6 +107,15 @@ export const supportedNetworks = [
         networkLogo: "/network/polygon.svg",
         nativeCurrency: "ETH",
     },
+    {
+        networkName: "Mode",
+        chainIdHex: "0x868b",
+        chainIdNumber: 34443,
+        rpcUrl: "https://mainnet.mode.network",
+        explorer: "https://explorer.mode.network",
+        networkLogo: "/network/mode.svg",
+        nativeCurrency: "ETH",
+    },
     // Testnet Network
     {
         networkName: "Sepolia",
@@ -140,7 +149,7 @@ export const supportedNetworks = [
         chainIdHex: "0xa0c71fd",
         chainIdNumber: 168587773,
         rpcUrl: "https://sepolia.blast.io",
-        explorer: "https://sepolia.blastexplorer.io",
+        explorer: "https://sepolia.blastscan.io",
         networkLogo: "/network/blast.svg",
         nativeCurrency: "ETH",
     },
@@ -172,12 +181,21 @@ export const supportedNetworks = [
         nativeCurrency: "ETH",
     },
     {
-        networkName: "ABS Testnet",
+        networkName: "Abstract Testnet",
         chainIdHex: "0x2b74",
         chainIdNumber: 11124,
         rpcUrl: "https://api.testnet.abs.xyz",
         explorer: "https://explorer.testnet.abs.xyz",
         networkLogo: "/network/abstract.svg",
+        nativeCurrency: "ETH",
+    },
+    {
+        networkName: "Mode Testnet",
+        chainIdHex: "0x397",
+        chainIdNumber: 919,
+        rpcUrl: "https://sepolia.mode.network",
+        explorer: "https://sepolia.explorer.mode.network",
+        networkLogo: "/network/mode.svg",
         nativeCurrency: "ETH",
     },
     {
@@ -190,7 +208,7 @@ export const supportedNetworks = [
         nativeCurrency: "BNB",
     },
     {
-        networkName: "Amoy",
+        networkName: "Polygon Amoy",
         chainIdHex: "0x13882",
         chainIdNumber: 80002,
         rpcUrl: "https://rpc-amoy.polygon.technology",
@@ -199,7 +217,7 @@ export const supportedNetworks = [
         nativeCurrency: "POL",
     },
     {
-        networkName: "Cardona",
+        networkName: "zkEVM Cardona",
         chainIdHex: "0x98a",
         chainIdNumber: 2442,
         rpcUrl: "https://etherscan.cardona.zkevm-rpc.com",
