@@ -19,63 +19,6 @@ export default function Home() {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [showOverlay, setShowOverlay] = useState(true);
-  const [videoUrl, setVideoUrl] = useState<string | null>(null);
-  const [audioUrl, setAudioUrl] = useState<string | null>(null);
-
-  useEffect(() => {
-    // Function to fetch media file and convert it into a Blob URL
-    async function loadMedia(type: 'video' | 'audio', fileName: string) {
-      try {
-        // Check if Blob URL is already stored in localStorage
-        const storedBlobUrl = localStorage.getItem(type === 'video' ? 'blobVideoUrl' : 'blobAudioUrl');
-        if (storedBlobUrl) {
-          // Set the Blob URL from localStorage to state
-          if (type === 'video') setVideoUrl(storedBlobUrl);
-          if (type === 'audio') setAudioUrl(storedBlobUrl);
-          return;
-        }
-
-        // Fetch media file from API
-        const response = await fetch(`/api/media?type=${type}&file=${fileName}`);
-
-        if (!response.ok) {
-          throw new Error(`Failed to load ${type} file`);
-        }
-
-        const blob = await response.blob();
-        const url = URL.createObjectURL(blob);
-
-        // Store Blob URL in localStorage and set state
-        if (type === 'video') {
-          localStorage.setItem('blobVideoUrl', url);
-          setVideoUrl(url);
-        } else if (type === 'audio') {
-          localStorage.setItem('blobAudioUrl', url);
-          setAudioUrl(url);
-        }
-      } catch (error) {
-        console.log(`Error loading ${type}:`, error);
-      }
-    }
-
-    // Load both video and audio media
-    loadMedia('video', 'shitcoin-room.mp4');
-    loadMedia('audio', 'shitcoin-song.mp3');
-
-    // Clean up Blob URLs on unmount
-    return () => {
-      const blobVideo = localStorage.getItem('blobVideoUrl');
-      const blobAudio = localStorage.getItem('blobAudioUrl');
-      if (blobVideo) {
-        URL.revokeObjectURL(blobVideo);
-        localStorage.removeItem('blobVideoUrl');
-      }
-      if (blobAudio) {
-        URL.revokeObjectURL(blobAudio);
-        localStorage.removeItem('blobAudioUrl');
-      }
-    };
-  }, []);
 
   // Toggle audio play and pause
   const handleAudioPlayPause = () => {
@@ -123,52 +66,36 @@ export default function Home() {
     <div className="relative flex items-center justify-center min-h-screen bg-yellow-100 dark:bg-[#282828] overflow-auto">
 
       {/* Background Video */}
-      {isNoWallet ? <video
+      <video
         className="w-full h-full absolute inset-0 object-cover"
         ref={videoRef}
         muted
         playsInline
         loop
         preload="auto"
-        src="/video/shitcoin-loading.mp4"
         controls={false}
         onContextMenu={(e) => e.preventDefault()}
       >
+        <source
+          src="/video/shitcoin-room.mp4"
+          type="video/mp4"
+        />
         Your browser does not support the video tag.
-      </video> : videoUrl ?
-        <video
-          className="w-full h-full absolute inset-0 object-cover"
-          ref={videoRef}
-          muted
-          playsInline
-          loop
-          preload="auto"
-          src={videoUrl}
-          controls={false}
-          onContextMenu={(e) => e.preventDefault()}
-        >
-          Your browser does not support the video tag.
-        </video> : null}
+      </video>
 
       {/* Background Music */}
-      {isNoWallet ? <audio
+      <audio
         loop
         ref={audioRef}
-        src="/audio/shitcoin-loading.mp3"
         controls={false}
         onContextMenu={(e) => e.preventDefault()}
       >
+        <source
+          src="/audio/shitcoin-song.mp3"
+          type="audio/mp3"
+        />
         Your browser does not support the audio element.
-      </audio> : audioUrl ?
-        <audio
-          loop
-          ref={audioRef}
-          src={audioUrl}
-          controls={false}
-          onContextMenu={(e) => e.preventDefault()}
-        >
-          Your browser does not support the audio element.
-        </audio> : null}
+      </audio>
 
       {/* Logo at Top-Left */}
       <div className="absolute top-4 left-3 max-w-20">
@@ -272,7 +199,6 @@ export default function Home() {
           </div>
         ) : (
           <>
-
             {/* Play/Pause Button */}
             <button
               onClick={handleAudioPlayPause}

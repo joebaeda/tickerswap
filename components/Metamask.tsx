@@ -8,7 +8,7 @@ const Metamask: React.FC = () => {
     }
 
     return (
-        <div className="fixed top-1/3">
+        <div className="absolute inset-0 mx-auto backdrop-blur-md flex flex-col items-center justify-center z-10">
             <a
                 href="https://metamask.io/download.html"
                 target="_blank"
