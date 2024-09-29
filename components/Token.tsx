@@ -181,7 +181,7 @@ const TokenCard = () => {
     };
 
     return (
-        <div className="fixed inset-0 p-4 rounded-t-2xl bg-gray-50 top-[21%] overflow-hidden overflow-y-auto custom-scroll z-50">
+        <div className="fixed inset-0 p-4 rounded-t-2xl font-mono text-gray-500 bg-gray-50 dark:text-white dark:bg-[#3c3c3c] top-[21%] overflow-hidden overflow-y-auto custom-scroll z-50">
 
             {/* Search Input */}
             <div className="flex flex-row mb-4">
@@ -190,9 +190,9 @@ const TokenCard = () => {
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     placeholder="Search tokens or type contract address, name, symbol, chain name or chain ID"
-                    className="w-full p-4 focus:outline-none text-gray-500 font-mono border border-r-0 border-lime-400 rounded-l-xl"
+                    className="w-full p-4 focus:outline-none bg-gray-100 dark:bg-[#282828] rounded-l-xl"
                 />
-                <button onClick={fetchDataFromAPI} className="p-4 bg-white border border-l-0 border-lime-500 rounded-r-xl">
+                <button onClick={fetchDataFromAPI} className="p-4 bg-gray-100 dark:bg-[#282828] rounded-r-xl">
                     <svg width="32" height="32" fill="rgb(249 115 22)" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
                         <path d="M7 12v-2l-4 3 4 3v-2h2.997A6.006 6.006 0 0 0 16 8h-2a4 4 0 0 1-3.996 4zM9 2H6.003A6.006 6.006 0 0 0 0 8h2a4 4 0 0 1 3.996-4H9v2l4-3-4-3z" fillRule="evenodd" />
                     </svg>
@@ -200,11 +200,11 @@ const TokenCard = () => {
             </div>
 
             {/* Token Card List */}
-            <div className="text-white font-mono">
+            <div>
                 {loading ? (
                     <div className="flex items-center justify-center min-h-screen">
-                        <svg width={200} height={200} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M17.353 19C18.815 19 20 17.787 20 16.292S18 13 14.833 14.937c-.042-.2 3.834-1.624 2.167-4.062-1.667-2.437-4 .875-3-1.875 1.667-3.25-2.333 2.688-4.833-3-1.514 1.625 1.973 3.25-1.514 4.875S6 14 8.333 14.938C5.68 14.938 5 16.198 5 17.194 5 18.192 5.882 19 7.653 19zM16.99 8.276c.65.31 1.206.806 1.66 1.47.659.964.888 1.894.784 2.76 1.53.624 2.566 1.988 2.566 3.786C22 18.882 19.93 21 17.353 21h-9.7C4.992 21 3 19.528 3 17.194c0-1.132.413-2.113 1.176-2.847a4 4 0 0 1-.188-.36c-.925-2.048.338-3.768 2.82-4.925q.243-.114.378-.195l-.057-.164c-.25-.707-.346-1.06-.364-1.62-.03-.898.282-1.742.938-2.446l2.071-2.224 1.224 2.782c.337.767.658 1.176.919 1.336.163.101.372.087.827-.101.098-.041.46-.205.526-.233.163-.07.303-.12.467-.163.443-.114.875-.132 1.403.095.835.357 1.241 1.119 1.254 1.884.196.09.394.166.597.263M14 4a1 1 0 1 1 0-2 1 1 0 0 1 0 2M4 7a1 1 0 1 1 0-2 1 1 0 0 1 0 2m16 1a1 1 0 1 1 0-2 1 1 0 0 1 0 2" fill="rgb(249 115 22)" />
+                        <svg width={150} height={150} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#bec4cf" d="M17.353 19C18.815 19 20 17.787 20 16.292S18 13 14.833 14.937c-.042-.2 3.834-1.624 2.167-4.062-1.667-2.437-4 .875-3-1.875 1.667-3.25-2.333 2.688-4.833-3-1.514 1.625 1.973 3.25-1.514 4.875S6 14 8.333 14.938C5.68 14.938 5 16.198 5 17.194 5 18.192 5.882 19 7.653 19zM16.99 8.276c.65.31 1.206.806 1.66 1.47.659.964.888 1.894.784 2.76 1.53.624 2.566 1.988 2.566 3.786C22 18.882 19.93 21 17.353 21h-9.7C4.992 21 3 19.528 3 17.194c0-1.132.413-2.113 1.176-2.847a4 4 0 0 1-.188-.36c-.925-2.048.338-3.768 2.82-4.925q.243-.114.378-.195l-.057-.164c-.25-.707-.346-1.06-.364-1.62-.03-.898.282-1.742.938-2.446l2.071-2.224 1.224 2.782c.337.767.658 1.176.919 1.336.163.101.372.087.827-.101.098-.041.46-.205.526-.233.163-.07.303-.12.467-.163.443-.114.875-.132 1.403.095.835.357 1.241 1.119 1.254 1.884.196.09.394.166.597.263M14 4a1 1 0 1 1 0-2 1 1 0 0 1 0 2M4 7a1 1 0 1 1 0-2 1 1 0 0 1 0 2m16 1a1 1 0 1 1 0-2 1 1 0 0 1 0 2" />
                         </svg>
                     </div>
                 ) : (
@@ -212,7 +212,7 @@ const TokenCard = () => {
                         {filteredTokens.toReversed().map((token, index) => (
                             <div
                                 key={index}
-                                className="hover:shadow-lg bg-gradient-to-br from-amber-500 to-amber-200 rounded-xl"
+                                className="hover:shadow-lg bg-gradient-to-br from-gray-100 to-yellow-200 dark:from-[#393939] dark:to-[#282828] rounded-xl"
                             >
                                 {/* Token Logo, Chain name and chain logo */}
                                 <div className="relative flex justify-end items-center">
@@ -224,7 +224,7 @@ const TokenCard = () => {
                                         priority={true}
                                         className="w-full h-48 rounded-3xl object-cover p-4"
                                     />
-                                    <div className="absolute top-0 right-0 bg-gradient-to-br from-amber-500 to-amber-200 p-2 flex flex-row rounded-bl-xl rounded-tr-xl justify-between items-center gap-2">
+                                    <div className="absolute top-0 right-0 bg-gradient-to-br from-gray-100 to-yellow-200 dark:from-[#393939] dark:to-[#282828] p-2 flex flex-row rounded-bl-xl rounded-tr-xl justify-between items-center gap-2">
                                         <p className="text-xs sm:text-sm">{token.tokenChainName}</p>
                                         <Image
                                             src={token.tokenChainLogoUrls}
@@ -264,7 +264,7 @@ const TokenCard = () => {
 
             {/* Network Switch Confirmation Modal */}
             <TokenModal isOpen={isConfirmModalOpen} onClose={closeConfirmModal}>
-                <div className="max-w-2xl p-4 text-gray-500 bg-gray-50 rounded-xl font-mono flex flex-col sm:flex-row gap-6">
+                <div className="max-w-3xl p-4 rounded-xl flex flex-col sm:flex-row gap-6 bg-gray-50 dark:bg-[#3c3c3c]">
                     {/* Token Image */}
                     <div className="sm:w-1/3 flex justify-center mt-2">
                         <Image
@@ -273,7 +273,7 @@ const TokenCard = () => {
                             width={350}
                             height={350}
                             priority={true}
-                            className="rounded-xl mx-auto border-lime-400 border object-cover bg-gray-200"
+                            className="rounded-xl mx-auto object-cover"
                         />
                     </div>
 
@@ -285,7 +285,7 @@ const TokenCard = () => {
                             </p>
 
                             {/* Token Detail */}
-                            <div className="w-full rounded-2xl bg-gray-50 text-gray-500">
+                            <div className="w-full rounded-2xl">
                                 <ul className="space-y-2">
                                     <li className="flex items-start">
                                         <span className="mr-2 text-green-500">
@@ -337,8 +337,8 @@ const Token = () => {
     const closeModal = () => setIsModalOpen(false);
 
     return (
-        <div className="absolute top-[5%] right-44">
-            <button onClick={openModal} className="w-full border-4 border-white bg-orange-500 hover:bg-orange-600 font-mono font-semibold text-white p-3 rounded-xl">Swap</button>
+        <div className="absolute top-[5.6%] right-44">
+            <button onClick={openModal} className="w-full p-3 bg-gradient-to-r from-orange-500 to-pink-800 hover:from-pink-800 hover:to-orange-500 rounded-lg font-mono">Swap</button>
 
             <TokenModal isOpen={isModalOpen} onClose={closeModal}>
                 <TokenCard />

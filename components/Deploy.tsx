@@ -201,7 +201,7 @@ const DeployToken: React.FC<DeployTokenProps> = ({ signer, address, networkChain
     };
 
     return (
-        <div className="flex flex-col rounded-2xl gap-5 sm:m-4 p-4 bg-gray-100 sm:flex-row text-gray-500 items-center justify-center font-mono">
+        <div className="flex flex-col rounded-2xl gap-5 sm:m-4 p-4 sm:flex-row bg-gray-50 dark:bg-[#3c3c3c] text-gray-500 dark:text-white items-center justify-center font-mono">
             {toast && (
                 <Toast
                     message={toast.message}
@@ -226,7 +226,7 @@ const DeployToken: React.FC<DeployTokenProps> = ({ signer, address, networkChain
                     <form className="w-full">
                         {/* Drag and Drop area */}
                         <div
-                            className={`border-4 border-dashed rounded-2xl p-4 cursor-pointer flex flex-col items-center justify-center transition-all ${dragActive ? 'border-blue-500 bg-blue-100' : 'border-gray-300'
+                            className={`rounded-2xl p-4 cursor-pointer flex flex-col items-center justify-center transition-all ${dragActive ? 'bg-blue-100' : ''
                                 }`}
                             onDragOver={handleDragOver}
                             onDragLeave={handleDragLeave}
@@ -237,10 +237,10 @@ const DeployToken: React.FC<DeployTokenProps> = ({ signer, address, networkChain
                                 <p className="text-center">{file.name}</p>
                             ) : (
                                 <div className="flex flex-col p-7 justify-center items-center">
-                                    <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                                    <svg width={200} height={200} viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M4 1C2.355 1 1 2.355 1 4v1h1V4c0-1.11.89-2 2-2h1V1zm2 0v1h4V1zm5 0v1h1c1.11 0 2 .89 2 2v1h1V4c0-1.645-1.355-3-3-3zM6 5c-.55 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1M1 6v4h1V6zm13 0v4h1V6zM9.5 8l-2 2L6 9l-2 2v.5c0 .5.5.5.5.5h7s.473-.035.5-.5v-1zM1 11v1c0 1.645 1.355 3 3 3h1v-1H4c-1.11 0-2-.89-2-2v-1zm13 0v1c0 1.11-.89 2-2 2h-1v1h1c1.645 0 3-1.355 3-3v-1zm-8 3v1h4v-1zm0 0" fill="#2e3434" fillOpacity=".349" />
                                     </svg>
-                                    <p className="text-center">
+                                    <p className="text-center max-w-60">
                                         Drag and drop your token logo, or <span className="text-blue-500 underline">browse</span>
                                     </p>
                                 </div>
@@ -258,17 +258,17 @@ const DeployToken: React.FC<DeployTokenProps> = ({ signer, address, networkChain
 
                         {/* Upload logo */}
                         {uploading && (
-                            <p className="text-center mt-4 text-gray-500">Uploading logo...</p>
+                            <p className="text-center mt-4">Uploading logo...</p>
                         )}
                     </form>
                 )}
             </div>
 
             {/* Initialize Token */}
-            <div className="w-full bg-gray-50 rounded-2xl">
+            <div className="w-full bg-white dark:bg-[#393939] rounded-2xl">
                 <div className="flex px-4 py-2 flex-row gap-2">
                     <div className="w-full">
-                        <label className="block mb-2 text-gray-500" htmlFor="tokenName">Token Name:</label>
+                        <label className="block mb-2" htmlFor="tokenName">Token Name:</label>
                         <input
                             type="text"
                             id="tokenName"
@@ -276,11 +276,11 @@ const DeployToken: React.FC<DeployTokenProps> = ({ signer, address, networkChain
                             placeholder="E.g, Pepe Token"
                             value={tokenName}
                             onChange={(e) => setTokenName(e.target.value)}
-                            className="border placeholder:opacity-25 focus:outline-none p-2 w-full text-gray-500 rounded-xl"
+                            className="bg-gray-100 dark:bg-[#282828] placeholder:opacity-25 focus:outline-none p-2 w-full rounded-xl"
                         />
                     </div>
                     <div className="w-full">
-                        <label className="block mb-2 text-gray-500" htmlFor="tokenSymbol">Token Symbol:</label>
+                        <label className="block mb-2" htmlFor="tokenSymbol">Token Symbol:</label>
                         <input
                             type="text"
                             id="tokenSymbol"
@@ -288,26 +288,26 @@ const DeployToken: React.FC<DeployTokenProps> = ({ signer, address, networkChain
                             placeholder="E.g, PEPE"
                             value={tokenSymbol}
                             onChange={(e) => setTokenSymbol(e.target.value)}
-                            className="border placeholder:opacity-25 focus:outline-none p-2 w-full text-gray-500 rounded-xl"
+                            className="bg-gray-100 dark:bg-[#282828] placeholder:opacity-25 focus:outline-none p-2 w-full rounded-xl"
                         />
                     </div>
                 </div>
 
                 <div className="w-full px-4 py-2">
-                    <label className="block mb-2 text-gray-500" htmlFor="tokenDesc">Description:</label>
+                    <label className="block mb-2" htmlFor="tokenDesc">Description:</label>
                     <textarea
                         id="tokenDesc"
                         name="tokenDesc"
                         placeholder="E.g, Pepe token is awesome token with great team and tokenomic..."
                         value={tokenDesc}
                         onChange={(e) => setTokenDesc(e.target.value)}
-                        className="border placeholder:opacity-25 focus:outline-none p-2 w-full text-gray-500 rounded-xl"
+                        className="bg-gray-100 dark:bg-[#282828] placeholder:opacity-25 focus:outline-none p-2 w-full rounded-xl"
                     />
                 </div>
 
                 <div className="flex px-4 py-2 flex-row gap-2">
                     <div className="w-full">
-                        <label className="block mb-2 text-gray-500" htmlFor="creatorFee">Creator Fee:</label>
+                        <label className="block mb-2" htmlFor="creatorFee">Creator Fee:</label>
                         <input
                             type="text"
                             id="creatorFee"
@@ -315,11 +315,11 @@ const DeployToken: React.FC<DeployTokenProps> = ({ signer, address, networkChain
                             placeholder="E.g, 5 (for 5%)"
                             value={creatorFee}
                             onChange={(e) => setCreatorFee(e.target.value)}
-                            className="border placeholder:opacity-25 focus:outline-none p-2 w-full text-gray-500 rounded-xl"
+                            className="bg-gray-100 dark:bg-[#282828] placeholder:opacity-25 focus:outline-none p-2 w-full rounded-xl"
                         />
                     </div>
                     <div className="w-full">
-                        <label className="block mb-2 text-gray-500" htmlFor="tokenSupply">Total Supply:</label>
+                        <label className="block mb-2" htmlFor="tokenSupply">Total Supply:</label>
                         <input
                             type="text"
                             id="tokenSupply"
@@ -327,13 +327,13 @@ const DeployToken: React.FC<DeployTokenProps> = ({ signer, address, networkChain
                             placeholder="E.g, 1000000"
                             value={tokenSupply}
                             onChange={(e) => setTokenSupply(e.target.value)}
-                            className="border placeholder:opacity-25 focus:outline-none p-2 w-full text-gray-500 rounded-xl"
+                            className="bg-gray-100 dark:bg-[#282828] placeholder:opacity-25 focus:outline-none p-2 w-full rounded-xl"
                         />
                     </div>
                 </div>
 
                 <div className="px-4 py-2">
-                    <label className="block mb-2 text-gray-500" htmlFor="tokenPrice">Token Price:</label>
+                    <label className="block mb-2" htmlFor="tokenPrice">Token Price:</label>
                     <input
                         type="text"
                         id="tokenPrice"
@@ -341,7 +341,7 @@ const DeployToken: React.FC<DeployTokenProps> = ({ signer, address, networkChain
                         placeholder={`E.g, 0.0001 (price in ${networkChainCurrencySymbol})`}
                         value={tokenPrice}
                         onChange={(e) => setTokenPrice(e.target.value)}
-                        className="border placeholder:opacity-25 focus:outline-none p-2 w-full text-gray-500 rounded-xl"
+                        className="bg-gray-100 dark:bg-[#282828] placeholder:opacity-25 focus:outline-none p-2 w-full rounded-xl"
                     />
                 </div>
 
@@ -367,8 +367,8 @@ const Deploy: React.FC<DeployTokenProps> = ({ signer, address, networkChainId, n
     const closeModal = () => setIsModalOpen(false);
 
     return (
-        <div className="absolute top-[5%] right-20">
-            <button onClick={openModal} className="w-full border-4 border-white bg-orange-500 hover:bg-orange-600 font-mono font-semibold text-white p-3 rounded-xl">Create</button>
+        <div className="absolute top-[5.6%] right-20">
+            <button onClick={openModal} className="w-full p-3 bg-gradient-to-r from-orange-500 to-pink-800 hover:from-pink-800 hover:to-orange-500 rounded-lg font-mono">Create</button>
 
             <DeployModal isOpen={isModalOpen} onClose={closeModal}>
                 <DeployToken

@@ -170,7 +170,7 @@ const Swap: React.FC<SwapProps> = ({ tokenAddress, signer, addressConnected, add
 
     return (
 
-        <div className="flex flex-col gap-5 p-4 sm:p-0 sm:flex-row text-gray-500 bg-gray-100 rounded-2xl items-center justify-center font-mono">
+        <div className="flex flex-col gap-5 p-4 sm:p-0 sm:flex-row text-gray-500 bg-gray-50 dark:text-white dark:bg-[#3c3c3c] rounded-2xl items-center justify-center font-mono">
             {toast && (
                 <Toast
                     message={toast.message}
@@ -184,7 +184,7 @@ const Swap: React.FC<SwapProps> = ({ tokenAddress, signer, addressConnected, add
             <div className="w-full sm:p-4">
                 <div className="space-y-4">
                     {/* Input 1: Swap from */}
-                    <div className="p-4 bg-white rounded-xl shadow-sm">
+                    <div className="p-4 bg-gray-100 dark:bg-[#282828] rounded-xl shadow-sm">
                         <div className="flex justify-between items-center">
                             <label htmlFor="fromAmount" className="text-sm font-medium">
                                 {swapType === 'buy' ? `${currencySymbol}` : `${tokenSymbol}`}
@@ -208,7 +208,7 @@ const Swap: React.FC<SwapProps> = ({ tokenAddress, signer, addressConnected, add
                                 disabled={loading}
                                 className="w-full p-3 bg-transparent text-lg focus:outline-none"
                             />
-                            <button onClick={() => setAmount(swapType === 'buy' ? addressBalances : tokenBalances)} className="ml-2 px-3 py-1 bg-gray-100 rounded-lg font-semibold">
+                            <button onClick={() => setAmount(swapType === 'buy' ? addressBalances : tokenBalances)} className="ml-2 px-3 py-1 font-semibold">
                                 MAX
                             </button>
                         </div>
@@ -220,7 +220,7 @@ const Swap: React.FC<SwapProps> = ({ tokenAddress, signer, addressConnected, add
                 <div className="flex justify-center items-center -my-4">
                     <button
                         onClick={() => setSwapType(swapType === 'buy' ? 'sell' : 'buy')}
-                        className="p-2 bg-gray-100 rounded-full hover:bg-gray-300 transition"
+                        className="p-2 bg-gray-50 dark:bg-[#3c3c3c] rounded-full transition"
                         disabled={loading}
                     >
                         <svg width="32" height="32" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
@@ -231,7 +231,7 @@ const Swap: React.FC<SwapProps> = ({ tokenAddress, signer, addressConnected, add
                 </div>
 
                 {/* Input 2: Swap to */}
-                <div className="p-4 bg-white rounded-xl shadow-sm">
+                <div className="p-4 bg-gray-100 dark:bg-[#282828] rounded-xl shadow-sm">
                     <div className="flex justify-between items-center">
                         <label htmlFor="toAmount" className="text-sm font-medium">
                             {swapType === 'buy' ? `${tokenSymbol}` : `${currencySymbol}`}
@@ -248,7 +248,7 @@ const Swap: React.FC<SwapProps> = ({ tokenAddress, signer, addressConnected, add
                             disabled
                             className="w-full p-3 bg-transparent text-lg focus:outline-none"
                         />
-                        <button onClick={() => setAmount(swapType === 'buy' ? addressBalances : tokenBalances)} className="ml-2 px-3 py-1 bg-gray-100 rounded-lg font-semibold">
+                        <button onClick={() => setAmount(swapType === 'buy' ? addressBalances : tokenBalances)} className="ml-2 px-3 py-1 font-semibold">
                             MAX
                         </button>
                     </div>

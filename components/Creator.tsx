@@ -143,7 +143,7 @@ const CreatorCard: React.FC<CreatorCardProps> = ({ signer, address, rpcUrl }) =>
     };
 
     return (
-        <div className="fixed inset-0 p-4 rounded-t-2xl bg-gray-50 top-[21%] overflow-hidden overflow-y-auto custom-scroll z-50">
+        <div className="fixed inset-0 p-4 rounded-t-2xl bg-gray-50 dark:bg-[#3c3c3c] top-[21%] overflow-hidden overflow-y-auto custom-scroll z-50">
             {toast && (
                 <Toast
                     message={toast.message}
@@ -153,7 +153,7 @@ const CreatorCard: React.FC<CreatorCardProps> = ({ signer, address, rpcUrl }) =>
             )}
 
             {/* Token By Creator */}
-            <div className="font-mono text-gray-500">
+            <div className="font-mono text-gray-500 dark:text-white">
                 {tokenNotFound ? (
                     <div className="flex flex-col items-center justify-center min-h-96">
                         <svg width="200" height="200" fill="rgb(249 115 22)" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -163,25 +163,25 @@ const CreatorCard: React.FC<CreatorCardProps> = ({ signer, address, rpcUrl }) =>
                     </div>
                 ) : (
                     <div className="overflow-x-auto">
-                        <table className="min-w-full bg-white border border-gray-300">
+                        <table className="min-w-full">
                             <thead>
                                 <tr className="text-left">
-                                    <th className="px-4 py-2 border">Token Name</th>
-                                    <th className="px-4 py-2 border">Chain</th>
-                                    <th className="px-4 py-2 border">Token Burn</th>
-                                    <th className="px-4 py-2 border">ETH Fees</th>
-                                    <th className="px-4 py-2 border border-r-0">Token Fees</th>
+                                    <th className="px-4 py-2">Token Name</th>
+                                    <th className="px-4 py-2">Chain</th>
+                                    <th className="px-4 py-2">Token Burn</th>
+                                    <th className="px-4 py-2">ETH Fees</th>
+                                    <th className="px-4 py-2">Token Fees</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody className="bg-gray-100 dark:bg-[#282828] rounded-3xl">
                                 {tokenData.toReversed().map((token, index) => (
                                     <tr key={index}>
-                                        <td className="px-4 py-2 border">{token.tokenName}</td>
-                                        <td className="px-4 py-2 border">{token.tokenChainName}</td>
-                                        <td className="px-4 py-2 border">{token.totalTokenBurn} {token.tokenSymbol}</td>
-                                        <td className="px-4 py-2 border">{token.totalEthFees} {token.tokenChainCurrency}</td>
-                                        <td className="px-4 py-2 border border-r-0">{token.totalTokenFees} {token.tokenSymbol}</td>
-                                        <td className="px-4 py-2 border border-l-0">
+                                        <td className="px-4 py-2">{token.tokenName}</td>
+                                        <td className="px-4 py-2">{token.tokenChainName}</td>
+                                        <td className="px-4 py-2">{token.totalTokenBurn} {token.tokenSymbol}</td>
+                                        <td className="px-4 py-2">{token.totalEthFees} {token.tokenChainCurrency}</td>
+                                        <td className="px-4 py-2">{token.totalTokenFees} {token.tokenSymbol}</td>
+                                        <td className="px-4 py-2">
                                             {token.isWithdraw && token.isGotRoyalty ? (
                                                 <button
                                                     onClick={() => withdraw(token.tokenAddress)}
@@ -219,12 +219,12 @@ const Creator: React.FC<CreatorCardProps> = ({ signer, address, rpcUrl }) => {
     const closeModal = () => setIsModalOpen(false);
 
     return (
-        <div className="absolute bottom-[3%] right-6">
+        <div className="absolute bottom-[3%] right-3">
             <button
                 onClick={openModal}
+                className="p-2 rounded-full bg-gradient-to-r from-orange-500 to-pink-800 hover:from-pink-800 hover:to-orange-500"
             >
-                <svg width="60" height="60" fill="#fff" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-                    <path fill="rgb(249 115 22)" d="m 21.125 4 l -1.656 0.625 c -1.864 0.703 -3.074 1.43 -3.875 2.188 a 5.1 5.1 0 0 0 -1.375 2.218 c -0.196 0.63 -0.274 0.996 -0.406 1.188 c -0.118 0.168 -0.32 0.37 -0.97 0.562 c -0.011 -0.008 -0.09 -0.058 -0.093 -0.062 h -0.031 a 4.3 4.3 0 0 0 -1.625 -0.625 c -1.664 -0.281 -3.406 0.445 -4.375 2 l -0.032 0.031 a 5.76 5.76 0 0 0 -0.75 3.625 c 0.051 0.406 0.153 0.82 0.313 1.219 a 4.53 4.53 0 0 0 -3.625 2.25 h -0.031 c -1.219 2.152 -0.477 4.93 1.687 6.156 h 0.032 v 0.031 c 0.113 0.055 1.445 0.758 3.437 1.375 S 12.531 28 16 28 s 6.254 -0.578 8.25 -1.187 c 1.973 -0.606 3.082 -1.2 3.469 -1.438 l 0.031 -0.031 c 2.133 -1.239 2.852 -3.965 1.625 -6.063 h 0.031 a 4.36 4.36 0 0 0 -2.5 -2.031 c 0 -0.004 -0.031 0.004 -0.031 0 a 4.42 4.42 0 0 0 -2.094 -2.687 c 0.137 -0.438 0.219 -0.946 0.219 -1.563 c 0 -1.16 -0.414 -2.137 -0.969 -2.844 s -1.222 -1.18 -1.781 -1.625 s -1.008 -0.855 -1.25 -1.25 c -0.242 -0.394 -0.363 -0.77 -0.219 -1.531 Z" />
+                <svg width="35" height="35" fill="#fff" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
                     <path d="m21.125 4-1.656.625c-1.864.703-3.074 1.43-3.875 2.188a5.1 5.1 0 0 0-1.375 2.218c-.196.63-.274.996-.406 1.188-.118.168-.32.37-.97.562-.011-.008-.09-.058-.093-.062h-.031a4.3 4.3 0 0 0-1.625-.625c-1.664-.281-3.406.445-4.375 2l-.032.031a5.76 5.76 0 0 0-.75 3.625c.051.406.153.82.313 1.219a4.53 4.53 0 0 0-3.625 2.25h-.031c-1.219 2.152-.477 4.93 1.687 6.156h.032v.031c.113.055 1.445.758 3.437 1.375S12.531 28 16 28s6.254-.578 8.25-1.187c1.973-.606 3.082-1.2 3.469-1.438l.031-.031c2.133-1.239 2.852-3.965 1.625-6.063h.031a4.36 4.36 0 0 0-2.5-2.031c0-.004-.031.004-.031 0a4.42 4.42 0 0 0-2.094-2.687c.137-.438.219-.946.219-1.563 0-1.16-.414-2.137-.969-2.844s-1.222-1.18-1.781-1.625-1.008-.855-1.25-1.25c-.242-.394-.363-.77-.219-1.531Zm-2.25 3.188c.094.417.234.824.438 1.156.472.77 1.105 1.258 1.687 1.719.582.46 1.125.902 1.469 1.343.343.442.531.864.531 1.594 0 .48-.055.773-.125 1-2.727-.398-5.113-1.086-6.875-1.75-.352-.133-.66-.273-.969-.406a2.8 2.8 0 0 0 .438-.5c.449-.653.511-1.285.656-1.75s.309-.836.844-1.344c.32-.305 1.21-.7 1.906-1.062m-8.562 4.78c.44-.003.894.134 1.312.407.55.383 1.73.984 3.688 1.719a35 35 0 0 0 7.718 1.937h.032c.695.086 1.269.496 1.625 1.094-.356.066-.723.16-1.063.313-.05.023-.105.007-.156.03-.04.012-.047.024-.063.032-.031.016-.062.016-.093.031-.028.012-.06.047-.094.063q-.129.058-.375.156c-.324.137-.809.313-1.438.5-1.258.371-3.086.75-5.406.75-1.723 0-3.195-.195-4.344-.437-.36-.086-.707-.18-1.031-.282-.652-.207-1.258-.504-1.25-.5-.969-.652-1.363-1.437-1.469-2.281-.105-.844.13-1.742.5-2.375.469-.754 1.172-1.148 1.906-1.156m-4.032 6.97c.477-.036.977.082 1.438.343.008.004.023.028.031.032.055.03.125.062.188.093.125.067.269.133.468.219q.598.258 1.656.563c.25.07.555.148.844.218.106.028.203.067.313.094.011.004.02-.004.031 0 .398.102.793.191 1.188.25v-.031A22 22 0 0 0 16 21c2.535 0 4.559-.426 5.969-.844.707-.21 1.273-.433 1.656-.593.14-.06.219-.114.313-.157h.093l.032-.031.187-.094c1.242-.664 2.734-.27 3.438.969v.031c.683 1.168.289 2.68-.938 3.375h-.031v.032c-.078.046-1.203.66-3.032 1.218C21.86 25.465 19.25 26 16 26s-5.855-.527-7.687-1.094c-1.81-.562-2.715-1.074-3.063-1.25-.016-.008-.02-.023-.031-.031-1.196-.707-1.567-2.184-.875-3.406.347-.582.867-1.016 1.468-1.188.153-.043.31-.082.47-.093" />
                 </svg>
 
