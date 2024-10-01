@@ -170,7 +170,7 @@ const Swap: React.FC<SwapProps> = ({ tokenAddress, signer, addressConnected, add
 
     return (
 
-        <div className="flex flex-col gap-5 p-4 sm:p-0 sm:flex-row text-gray-500 bg-gray-50 dark:text-white dark:bg-[#3c3c3c] rounded-2xl items-center justify-center font-mono">
+        <div className="fixed inset-0 rounded-t-2xl font-mono text-gray-500 bg-gray-50 dark:text-white dark:bg-[#3c3c3c] top-[12%] overflow-hidden overflow-y-auto custom-scroll z-50">
             {toast && (
                 <Toast
                     message={toast.message}
@@ -178,11 +178,12 @@ const Swap: React.FC<SwapProps> = ({ tokenAddress, signer, addressConnected, add
                     onClose={() => setToast(null)}
                 />
             )}
-            
+
 
             {/* Swap Form */}
-            <div className="w-full sm:p-4">
-                <div className="space-y-4">
+            <div className="relative w-full p-4">
+
+                <div className="mt-4">
                     {/* Input 1: Swap from */}
                     <div className="p-4 bg-gray-100 dark:bg-[#282828] rounded-xl shadow-sm">
                         <div className="flex justify-between items-center">
@@ -223,7 +224,7 @@ const Swap: React.FC<SwapProps> = ({ tokenAddress, signer, addressConnected, add
                         className="p-2 bg-gray-50 dark:bg-[#3c3c3c] rounded-full transition"
                         disabled={loading}
                     >
-                        <svg width="32" height="32" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                        <svg width="42" height="42" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
                             <path fill="none" d="M0 0h16v16H0z" />
                             <path d="M5 16V4.8L2.4 7.4 1 6l6-6v16zm6-4.8 2.6-2.6L15 10l-6 6V0h2z" />
                         </svg>
@@ -263,27 +264,35 @@ const Swap: React.FC<SwapProps> = ({ tokenAddress, signer, addressConnected, add
                     </span>
                 </div>
 
+            </div>
+
+            {/* Est output and Button */}
+            <div className="w-full absolute bottom-1 p-4">
+
+                {/* Est output */}
+                {swapType === 'buy' ? (
+                    <>
+                        <p className="py-3">Fee &#40;{creatorGotFee}%&#41;: <span className="float-right">{feeOnEth ? feeOnEth.slice(0, 8) : '0'} {currencySymbol}</span></p>
+                        <p>Received &#40;Est&#41;: <span className="float-right">{tokenMinAmountOut ? tokenMinAmountOut.slice(0, 8) : '0'} {tokenSymbol}</span></p>
+                    </>
+                ) : (
+                    <>
+                        <p className="py-3">Fee &#40;{creatorGotFee}%&#41;: <span className="float-right">{feeOnToken ? feeOnToken.slice(0, 8) : '0'} {tokenSymbol}</span></p>
+                        <p>Received &#40;Est&#41;: <span className="float-right">{ethMinAmountOut ? ethMinAmountOut.slice(0, 8) : '0'} {currencySymbol}</span></p>
+                    </>
+                )}
+
                 {/* Swap Button */}
                 <button
                     onClick={handleSwap}
-                    className={`w-full p-3 rounded-lg ${loading ? 'bg-gray-500' : 'bg-blue-500 hover:bg-blue-600'} text-white font-bold`}
+                    className={`w-full mt-6 p-3 rounded-lg ${loading ? 'bg-gray-500' : 'bg-blue-500 hover:bg-blue-600'} text-white font-bold`}
                     disabled={loading}
                 >
                     {loading ? 'Processing...' : swapType === 'buy' ? `Buy ${tokenName}` : `Sell ${tokenName}`}
                 </button>
 
-                {swapType === 'buy' ? (
-                    <>
-                        <p className="py-3">Fee &#40;{creatorGotFee}%&#41;: <span className="float-right">{feeOnEth ? feeOnEth.slice(0, 8) : '0'} {currencySymbol}</span></p>
-                        <p>{tokenSymbol} Received &#40;Est&#41;: <span className="float-right">{tokenMinAmountOut ? tokenMinAmountOut.slice(0, 8) : '0'} {tokenSymbol}</span></p>
-                    </>
-                ) : (
-                    <>
-                        <p className="py-3">Fee &#40;{creatorGotFee}%&#41;: <span className="float-right">{feeOnToken ? feeOnToken.slice(0, 8) : '0'} {tokenSymbol}</span></p>
-                        <p>{currencySymbol} Received &#40;Est&#41;: <span className="float-right">{ethMinAmountOut ? ethMinAmountOut.slice(0, 8) : '0'} {currencySymbol}</span></p>
-                    </>
-                )}
             </div>
+
         </div>
     );
 };
