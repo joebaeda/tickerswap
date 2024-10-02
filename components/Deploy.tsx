@@ -288,8 +288,8 @@ const DeployToken: React.FC<DeployTokenProps> = ({ signer, address, networkChain
 
             {/* Initialize Token */}
             <div className="w-full">
-                <div className="bg-white dark:bg-[#393939] rounded-2xl">
-                    <div className="flex px-4 py-2 flex-row gap-2">
+                <div className="sm:p-4 sm:bg-white sm:dark:bg-[#393939] sm:rounded-2xl">
+                    <div className="flex py-2 flex-row gap-2">
                         <div className="w-full">
                             <label className="block mb-2" htmlFor="tokenName">Token Name:</label>
                             <input
@@ -316,7 +316,7 @@ const DeployToken: React.FC<DeployTokenProps> = ({ signer, address, networkChain
                         </div>
                     </div>
 
-                    <div className="w-full px-4 py-2">
+                    <div className="w-full py-2">
                         <label className="block mb-2" htmlFor="tokenDesc">Description:</label>
                         <textarea
                             id="tokenDesc"
@@ -328,7 +328,7 @@ const DeployToken: React.FC<DeployTokenProps> = ({ signer, address, networkChain
                         />
                     </div>
 
-                    <div className="flex px-4 py-2 flex-row gap-2">
+                    <div className="flex py-2 flex-row gap-2">
                         <div className="w-full">
                             <label className="block mb-2" htmlFor="creatorFee">Creator Fee:</label>
                             <input
@@ -355,7 +355,7 @@ const DeployToken: React.FC<DeployTokenProps> = ({ signer, address, networkChain
                         </div>
                     </div>
 
-                    <div className="p-4">
+                    <div className="py-2">
                         <label className="block mb-2" htmlFor="tokenPrice">Token Price:</label>
                         <input
                             type="text"
