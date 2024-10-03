@@ -9,27 +9,41 @@ import {
     tokenPriceInETH,
     ethPriceInToken,
     tokenBalance,
-    creatorFee
+    creatorFee,
+    ethBalance
 } from '@/lib/token';
 import Toast from './Toast';
+
+const formatToUSD = (value: number): string => {
+    return new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    }).format(value);
+};
 
 interface SwapProps {
     tokenAddress: string;
     signer?: ethers.Signer | null;
     addressConnected: string;
-    addressBalances: string;
     currencySymbol: string;
     chainBlockExplorer: string;
+    nativeCoinPriceId: string;
 }
 
-const Swap: React.FC<SwapProps> = ({ tokenAddress, signer, addressConnected, addressBalances, currencySymbol }) => {
+const Swap: React.FC<SwapProps> = ({ tokenAddress, signer, addressConnected, currencySymbol, nativeCoinPriceId }) => {
     const [amount, setAmount] = useState<string>('');
+    const [amountEtherInUSD, setAmountEtherInUSD] = useState<string | null>(null);
+    const [amountTokenInUSD, setAmountTokenInUSD] = useState<string | null>(null);
     const [swapType, setSwapType] = useState<'buy' | 'sell'>('buy');
     const [tokenName, setTokenName] = useState<string>('');
     const [tokenSymbol, setTokenSymbol] = useState<string>('');
     const [totalSupply, setTotalSupply] = useState<string>('');
     const [ethPrice, setEthPrice] = useState<string | null>(null);
     const [tokenPrice, setTokenPrice] = useState<string | null>(null);
+    const [nativePriceInUSD, setNativePriceInUSD] = useState<number | null>(null);
+    const [priceInUSD, setPriceInUSD] = useState<string | null>(null);
     const [creatorGotFee, setCreatorGotFee] = useState<string>('');
     const [feeOnEth, setFeeOnEth] = useState<string | null>(null);
     const [feeOnToken, setFeeOnToken] = useState<string | null>(null);
@@ -38,6 +52,27 @@ const Swap: React.FC<SwapProps> = ({ tokenAddress, signer, addressConnected, add
     const [loading, setLoading] = useState<boolean>(false);
     const [toast, setToast] = useState<{ message: string; type: 'success' | 'warning' | 'error' } | null>(null);
     const [tokenBalances, setTokenBalance] = useState<string>('');
+    const [etherBalance, setEtherBalance] = useState<string>('');
+
+    useEffect(() => {
+        const fetchTokenPriceInUSD = async () => {
+            try {
+                const response = await fetch(`/api/price?id=${nativeCoinPriceId}`);
+                if (!response.ok) {
+                    throw new Error('Failed to fetch token price');
+                }
+                const data = await response.json();
+                const nativeCoinPrice = data[nativeCoinPriceId].usd;
+                setNativePriceInUSD(nativeCoinPrice);
+
+            } catch (error) {
+                console.error('Error fetching token price:', error);
+                return null;
+            }
+        };
+        fetchTokenPriceInUSD();
+
+    }, [nativeCoinPriceId])
 
     useEffect(() => {
         const fetchTokenData = async () => {
@@ -48,11 +83,14 @@ const Swap: React.FC<SwapProps> = ({ tokenAddress, signer, addressConnected, add
                     const supplyInWei = await totalTokenSupply(tokenAddress);
                     const supply = ethers.formatEther(supplyInWei);
                     const tokenOwnedWei = await tokenBalance(tokenAddress, addressConnected);
+                    const ethOwnedWei = await ethBalance(addressConnected);
                     const tokenOwned = ethers.formatEther(tokenOwnedWei);
+                    const ethOwned = ethers.formatEther(ethOwnedWei);
                     setTokenName(name);
                     setTokenSymbol(symbol);
                     setTotalSupply(supply);
                     setTokenBalance(tokenOwned);
+                    setEtherBalance(ethOwned);
 
                     const priceInETH = await tokenPriceInETH(tokenAddress);
                     const priceInToken = await ethPriceInToken(tokenAddress);
@@ -62,6 +100,18 @@ const Swap: React.FC<SwapProps> = ({ tokenAddress, signer, addressConnected, add
                     setEthPrice(ethers.formatEther(priceInETH));
                     setTokenPrice(ethers.formatEther(priceInToken));
 
+                    const priceToUSD = Number(ethers.formatEther(priceInETH)) * Number(nativePriceInUSD);
+                    setPriceInUSD(formatToUSD(priceToUSD));
+
+                    if (swapType === 'buy') {
+                        const ethAmountToUSD = Number(amount) * Number(nativePriceInUSD);
+                        setAmountEtherInUSD(formatToUSD(ethAmountToUSD));
+                    } else {
+                        const etherAmount = Number(amount) * Number(ethers.formatEther(priceInETH));
+                        const tokenAmountInUSD = etherAmount * Number(nativePriceInUSD);
+                        setAmountTokenInUSD(formatToUSD(tokenAmountInUSD));
+                    }
+
                 } catch (err) {
                     console.error('Failed to fetch token data:', err);
                 }
@@ -69,7 +119,7 @@ const Swap: React.FC<SwapProps> = ({ tokenAddress, signer, addressConnected, add
         };
 
         fetchTokenData();
-    }, [tokenAddress, addressConnected]);
+    }, [tokenAddress, addressConnected, nativePriceInUSD, swapType, amount]);
 
     useEffect(() => {
         const estimateAmountOut = async () => {
@@ -87,7 +137,7 @@ const Swap: React.FC<SwapProps> = ({ tokenAddress, signer, addressConnected, add
                 if (swapType === 'buy') {
                     // Calculate tokens out for the given ETH amount
                     const tokensOut = ethAmount / priceInEth;
-                    const tokensMinOut = tokensOut * 85 / 100; // Apply slippage
+                    const tokensMinOut = tokensOut * 95 / 100; // Apply slippage
                     const feeEth = ethAmount * Number(feeForCreator) / 100; // Aplly fee for creator
 
                     // Convert to readable format
@@ -96,7 +146,7 @@ const Swap: React.FC<SwapProps> = ({ tokenAddress, signer, addressConnected, add
                 } else if (swapType === 'sell') {
                     // Calculate ETH out for the given token amount
                     const ethOut = tokenAmount / priceInToken;
-                    const ethMinOut = ethOut * 85 / 100; // Apply slippage
+                    const ethMinOut = ethOut * 95 / 100; // Apply slippage
                     const feeToken = tokenAmount * Number(feeForCreator) / 100 // Apply fee for creator
 
                     // Convert to readable format
@@ -120,17 +170,16 @@ const Swap: React.FC<SwapProps> = ({ tokenAddress, signer, addressConnected, add
 
         try {
             if (swapType === 'buy') {
-                // Calculate 5% of the total supply
-                const tenPercentOfSupply = Number(totalSupply) * 5 / 100;
+                // Calculate 1% of the total supply
+                const tenPercentOfSupply = Number(totalSupply) * 1 / 100;
 
-                // Calculate price in ETH for 5% token supply
+                // Calculate price in ETH for 1% token supply
                 const maxETHAmount = tenPercentOfSupply / Number(tokenPrice as string);
-                const ethMaxBuy = maxETHAmount * 75 / 100;
 
-                // Check if the purchase exceeds 5% of the total supply
-                if (ethAmount > ethers.parseEther(String(ethMaxBuy))) {
+                // Check if the purchase exceeds 1% of the total supply
+                if (ethAmount > ethers.parseEther(String(maxETHAmount))) {
                     setToast({
-                        message: `The purchase amount exceeds 5% of the total supply. You can buy up to ${parseFloat(ethMaxBuy.toString()).toFixed(5)} ${currencySymbol}.`,
+                        message: `The purchase amount exceeds 1% of the total supply. You can buy up to ${parseFloat(maxETHAmount.toString()).toFixed(5)} ${currencySymbol}.`,
                         type: 'error',
                     });
                     setLoading(false);
@@ -193,9 +242,9 @@ const Swap: React.FC<SwapProps> = ({ tokenAddress, signer, addressConnected, add
                             {/* Make the balance clickable to set the max amount */}
                             <span
                                 className="text-sm font-medium text-right cursor-pointer"
-                                onClick={() => setAmount(swapType === 'buy' ? addressBalances : tokenBalances)}
+                                onClick={() => setAmount(swapType === 'buy' ? etherBalance : tokenBalances)}
                             >
-                                Balance: {swapType === 'buy' ? `${addressBalances.slice(0, 8)}` : `${tokenBalances.slice(0, 8)}`}
+                                Balance: {swapType === 'buy' ? `${etherBalance.slice(0, 8)}` : `${tokenBalances.slice(0, 8)}`}
                             </span>
                         </div>
                         <div className="flex items-center mt-2">
@@ -207,12 +256,13 @@ const Swap: React.FC<SwapProps> = ({ tokenAddress, signer, addressConnected, add
                                 onChange={(e) => setAmount(e.target.value)}
                                 placeholder="0"
                                 disabled={loading}
-                                className="w-full p-3 bg-transparent text-lg focus:outline-none"
+                                className="w-full py-3 bg-transparent text-lg focus:outline-none"
                             />
-                            <button onClick={() => setAmount(swapType === 'buy' ? addressBalances : tokenBalances)} className="ml-2 px-3 py-1 font-semibold">
+                            <button onClick={() => setAmount(swapType === 'buy' ? etherBalance : tokenBalances)} className="ml-2 px-3 py-1 font-semibold">
                                 MAX
                             </button>
                         </div>
+                        <p>{swapType === 'buy' ? `${amountEtherInUSD || '$0.00'}` : `${amountTokenInUSD || '$0.00'}`}</p>
                     </div>
                 </div>
 
@@ -237,7 +287,7 @@ const Swap: React.FC<SwapProps> = ({ tokenAddress, signer, addressConnected, add
                         <label htmlFor="toAmount" className="text-sm font-medium">
                             {swapType === 'buy' ? `${tokenSymbol}` : `${currencySymbol}`}
                         </label>
-                        <span className="text-sm font-medium text-right">Balance: {swapType === 'buy' ? `${tokenBalances.slice(0, 8)}` : `${addressBalances.slice(0, 8)}`}</span>
+                        <span className="text-sm font-medium text-right">Balance: {swapType === 'buy' ? `${tokenBalances.slice(0, 8)}` : `${etherBalance.slice(0, 8)}`}</span>
                     </div>
                     <div className="flex items-center mt-2">
                         <input
@@ -247,21 +297,23 @@ const Swap: React.FC<SwapProps> = ({ tokenAddress, signer, addressConnected, add
                             name="toAmount"
                             placeholder="0"
                             disabled
-                            className="w-full p-3 bg-transparent text-lg focus:outline-none"
+                            className="w-full py-3 bg-transparent text-lg focus:outline-none"
                         />
-                        <button onClick={() => setAmount(swapType === 'buy' ? addressBalances : tokenBalances)} className="ml-2 px-3 py-1 font-semibold">
+                        <button onClick={() => setAmount(swapType === 'buy' ? etherBalance : tokenBalances)} className="ml-2 px-3 py-1 font-semibold">
                             MAX
                         </button>
                     </div>
+                    <p>{swapType === 'buy' ? `${amountEtherInUSD || '$0.00'}` : `${amountTokenInUSD || '$0.00'}`}</p>
                 </div>
 
                 {/* Price Information */}
                 <div className="text-center text-sm text-gray-500 my-4">
-                    <span>
-                        Price: {swapType === 'buy'
+                    Price: {priceInUSD || '$0.00'}
+                    <span> - &#40;
+                        {swapType === 'buy'
                             ? `1 ${currencySymbol} = ${tokenPrice?.slice(0, 8)} ${tokenSymbol}`
                             : `1 ${tokenSymbol} = ${ethPrice?.slice(0, 8)} ${currencySymbol}`}
-                    </span>
+                        &#41;</span>
                 </div>
 
             </div>

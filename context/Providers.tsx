@@ -1,7 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useEffect, useState, ReactNode, useCallback } from 'react';
-import { ethers, Signer } from 'ethers';
+import { ethers } from 'ethers';
 import { supportedNetworks } from '@/lib/supportedNetworks';
 
 interface NetworkProps {
@@ -15,7 +15,8 @@ interface NetworkProps {
 }
 
 interface ProvidersProps {
-    signer: Signer | null;
+    signer: ethers.Signer | null;
+    nativeCoinPriceId: string;
     address: string;
     balances: string;
     network: NetworkProps | null;
@@ -41,7 +42,8 @@ interface WalletProviderProps {
 }
 
 export const WalletProvider: React.FC<WalletProviderProps> = ({ children }) => {
-    const [signer, setSigner] = useState<Signer | null>(null);
+    const [signer, setSigner] = useState<ethers.Signer | null>(null);
+    const [nativeCoinPriceId, setNativeCoinPriceId] = useState<string>('');
     const [address, setAddress] = useState<string>('');
     const [balances, setBalances] = useState<string>('');
     const [network, setNetwork] = useState<NetworkProps | null>(null);
@@ -69,6 +71,16 @@ export const WalletProvider: React.FC<WalletProviderProps> = ({ children }) => {
                 setIsWrongNetwork(false);
             }
 
+            // Get native coin price Id
+            if (network.chainId === BigInt(56) || network.chainId === BigInt(97)) {
+                setNativeCoinPriceId('binancecoin');
+            } else if (network.chainId === BigInt(137) || network.chainId === BigInt(80002)) {
+                setNativeCoinPriceId('polygon-ecosystem-token');
+            } else if (network.chainId === BigInt(43114) || network.chainId === BigInt(43113)) {
+                setNativeCoinPriceId('avalanche-2');
+            } else {
+                setNativeCoinPriceId('ethereum');
+            }
 
             const signer = await provider.getSigner();
             const userAddress = await signer.getAddress();
@@ -133,7 +145,7 @@ export const WalletProvider: React.FC<WalletProviderProps> = ({ children }) => {
     }, [connectWallet, disconnectWallet]);
 
     return (
-        <WalletContext.Provider value={{ signer, address, balances, network, isWrongNetwork, isNoWallet, isConnected, connectWallet, disconnectWallet }}>
+        <WalletContext.Provider value={{ signer, nativeCoinPriceId, address, balances, network, isWrongNetwork, isNoWallet, isConnected, connectWallet, disconnectWallet }}>
             {children}
         </WalletContext.Provider>
     );

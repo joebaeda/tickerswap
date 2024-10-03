@@ -107,6 +107,12 @@ export const tokenBalance = async (tokenAddress: string, address: string) => {
     return tokenBalances;
 };
 
+export const ethBalance = async (address: string) => {
+    const provider = new ethers.BrowserProvider(window.ethereum);
+    const etherBalances = await provider.getBalance(address);
+    return etherBalances;
+};
+
 // Function to read multi chain data
 
 const getProvider = (rpcUrl: string) => {

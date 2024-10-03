@@ -234,4 +234,13 @@ export const supportedNetworks = [
         networkLogo: "/network/arbitrum-one.svg",
         nativeCurrency: "ETH",
     },
+    {
+        networkName: "AVAX Testnet",
+        chainIdHex: "0xa869",
+        chainIdNumber: 43113,
+        rpcUrl: "https://api.avax-test.network/ext/bc/C/rpc",
+        explorer: "https://subnets-test.avax.network/c-chain",
+        networkLogo: "/network/avax.svg",
+        nativeCurrency: "AVAX",
+    },
 ]

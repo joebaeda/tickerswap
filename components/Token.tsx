@@ -76,7 +76,11 @@ interface TokenContract {
     deployer: string;
 }
 
-const TokenCard = () => {
+interface TokenCardProps {
+    nativeCoinPriceId: string;
+}
+
+const TokenCard: React.FC<TokenCardProps> = ({nativeCoinPriceId}) => {
     const [data, setData] = useState<TokenContract[]>([]);
     const [loading, setLoading] = useState(false);
     const [searchTerm, setSearchTerm] = useState<string>('');
@@ -86,7 +90,7 @@ const TokenCard = () => {
     const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
     const [tokenBlockExplorer, setTokenBlockExplorer] = useState<string>('');
     const [nativeCurrency, setNativeCurrency] = useState<string>('');
-    const { signer, address, balances, network } = useWallet();
+    const { signer, address, network } = useWallet();
 
     // Fetch data from the API
     const fetchDataFromAPI = async () => {
@@ -272,9 +276,9 @@ const TokenCard = () => {
                         tokenAddress={selectedToken.tokenAddress}
                         signer={signer}
                         addressConnected={address}
-                        addressBalances={balances}
                         currencySymbol={nativeCurrency}
                         chainBlockExplorer={tokenBlockExplorer}
+                        nativeCoinPriceId={nativeCoinPriceId}
                     />
                 )}
             </TokenModal>
@@ -347,7 +351,11 @@ const TokenCard = () => {
     );
 };
 
-const Token = () => {
+interface TokenProps {
+    nativeCoinPriceId: string;
+}
+
+const Token: React.FC<TokenProps> = ({nativeCoinPriceId}) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const openModal = () => setIsModalOpen(true);
@@ -358,7 +366,7 @@ const Token = () => {
             <button onClick={openModal} className="w-full p-3 bg-gradient-to-r from-orange-500 to-pink-800 hover:from-pink-800 hover:to-orange-500 rounded-lg font-mono">Swap</button>
 
             <TokenModal isOpen={isModalOpen} onClose={closeModal}>
-                <TokenCard />
+                <TokenCard nativeCoinPriceId={nativeCoinPriceId} />
             </TokenModal>
         </div>
     );

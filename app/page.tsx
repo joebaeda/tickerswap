@@ -14,7 +14,7 @@ import Contact from "@/components/Contact";
 import DarkModeToggle from "@/components/DarkMode";
 
 export default function Home() {
-  const { signer, address, network, isWrongNetwork, isNoWallet, isConnected, connectWallet } = useWallet();
+  const { signer, nativeCoinPriceId, address, network, isWrongNetwork, isNoWallet, isConnected, connectWallet } = useWallet();
   const videoRef = useRef<HTMLVideoElement>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -219,7 +219,7 @@ export default function Home() {
             <Deploy signer={signer} address={address} networkChainId={network?.chainIdNumber as number} networkChainHex={network?.chainIdHex as string} networkChainName={network?.networkName as string} networkChainLogoUrls={network?.networkLogo as string} networkChainRPCUrls={network?.rpcUrl as string} networkChainExplorerUrls={network?.explorer as string} networkChainCurrencySymbol={network?.nativeCurrency as string} />
 
             {/* Swap */}
-            <Token />
+            <Token nativeCoinPriceId={nativeCoinPriceId} />
 
             {/* Contact */}
             <Contact />
