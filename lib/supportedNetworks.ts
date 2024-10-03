@@ -225,4 +225,13 @@ export const supportedNetworks = [
         networkLogo: "/network/polygon.svg",
         nativeCurrency: "ETH",
     },
+    {
+        networkName: "Arbitrum Sepolia",
+        chainIdHex: "0x66eee",
+        chainIdNumber: 421614,
+        rpcUrl: "https://sepolia-rollup.arbitrum.io/rpc",
+        explorer: "https://sepolia.arbiscan.io",
+        networkLogo: "/network/arbitrum-one.svg",
+        nativeCurrency: "ETH",
+    },
 ]

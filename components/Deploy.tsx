@@ -232,7 +232,7 @@ const DeployToken: React.FC<DeployTokenProps> = ({ signer, address, networkChain
                 />
             )}
             {/* Upload token Logo */}
-            <div className="w-full flex flex-col">
+            <div className={`w-full flex flex-col ${dragActive ? 'bg-blue-100 dark:bg-[#393939] h-full rounded-xl' : ''}`}>
                 {ipfsHash ? (
                     <div className="w-full overflow-hidden">
                         <Image
@@ -248,8 +248,7 @@ const DeployToken: React.FC<DeployTokenProps> = ({ signer, address, networkChain
                     <form className="w-full">
                         {/* Drag and Drop area */}
                         <div
-                            className={`rounded-2xl p-4 cursor-pointer flex flex-col items-center justify-center transition-all ${dragActive ? 'bg-blue-100' : ''
-                                }`}
+                            className="rounded-2xl p-4 cursor-pointer flex flex-col items-center justify-center transition-all"
                             onDragOver={handleDragOver}
                             onDragLeave={handleDragLeave}
                             onDrop={handleDrop}
